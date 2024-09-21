@@ -11,6 +11,10 @@ body,
     overflow: hidden;
 }
 
+img {
+    -webkit-user-drag: none;
+}
+
 ::selection {
     background-color: rgba(128, 128, 128, 0.5);
 }

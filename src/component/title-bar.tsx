@@ -11,8 +11,9 @@ export default function TitleBar() {
             className="flex h-8 justify-between"
             data-tauri-drag-region
         >
-            <div className="flex gap-1 items-center m-2">
-                <img src="tauri.svg" alt="favicon" className="h-full" />
+            <div className="flex gap-2 items-center m-2">
+                <img src="tauri.svg" alt="favicon" className="h-full" data-tauri-drag-region />
+                <h1 data-tauri-drag-region>Compendium</h1>
             </div>
             <div className="flex">
                 <button className={`${buttonStyle} hover:bg-hover-dark`} onClick={() => appWindow.minimize()}><FiMinimize /></button>

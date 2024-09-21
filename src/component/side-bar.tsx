@@ -1,5 +1,8 @@
-import { GrCubes, GrHome } from "react-icons/gr";
+import { GrBook, GrCubes, GrHome } from "react-icons/gr";
 import SideBarButton from "./side-bar-button";
+import { RiRobot2Line } from "react-icons/ri";
+import { IoCubeOutline, IoEarthOutline } from "react-icons/io5";
+import { useLocation } from "react-router-dom";
 
 export default function SideBar() {
     const pages = [
@@ -15,30 +18,31 @@ export default function SideBar() {
         },
         {
             to: "/story",
-            icon: <GrCubes />,
+            icon: <GrBook />,
             name: "Story"
         },
         {
             to: "/character",
-            icon: <GrCubes />,
+            icon: <RiRobot2Line />,
             name: "Character"
         },
         {
             to: "/structure",
-            icon: <GrCubes />,
+            icon: <IoCubeOutline />,
             name: "Structure"
         },
         {
             to: "/terrain",
-            icon: <GrCubes />,
+            icon: <IoEarthOutline />,
             name: "Terrain"
         }
     ];
 
+    const location = useLocation();
     return (
-        <div className="flex flex-col w-20 px-5 gap-4 h-full">
+        <div className="flex flex-col min-w-24 gap-6 h-full">
             {
-                pages.map((page, i) => <SideBarButton key={i} to={page.to} icon={page.icon} name={page.name} isSelecting />)
+                pages.map((page, i) => <SideBarButton key={i} to={page.to} icon={page.icon} name={page.name} isSelecting={location.pathname == page.to} />)
             }
         </div>
     );
