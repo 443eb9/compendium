@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import "../data/localization";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
-import { Project } from "../data/model/project";
+import { Project, useProjectContext } from "../data/model/project";
 import { useEffect, useState } from "react";
 
 function createProject(t: any, setProject: any) {
@@ -67,7 +67,7 @@ function closeProject(t: any, setProject: any) {
 
 export default function HomePage() {
     const { t } = useTranslation();
-    const [project, setProject] = useState<Project | null>(null);
+    const [project, setProject] = useProjectContext();
     const [isMounted, setMounted] = useState(false);
 
     useEffect(() => {

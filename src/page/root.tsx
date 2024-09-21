@@ -2,8 +2,12 @@ import { Outlet } from "react-router-dom";
 import SideBar from "../component/side-bar";
 import TitleBar from "../component/title-bar";
 import { Toaster } from "react-hot-toast";
+import { useState } from "react";
+import { Project } from "../data/model/project";
 
 export default function Root() {
+    const [project, setProject] = useState<Project | null>(null);
+
     return (
         <div className="w-full h-full font-mono text-light">
             <Toaster
@@ -14,8 +18,8 @@ export default function Root() {
             />
             <TitleBar />
             <div className="flex h-full gap-4 m-2">
-                <SideBar />
-                <Outlet />
+                <SideBar projectLoaded={project != null} />
+                <Outlet context={[project, setProject]} />
             </div>
         </div>
     );
