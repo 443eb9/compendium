@@ -9,32 +9,32 @@ export default function SideBar() {
         {
             to: "/",
             icon: <GrHome />,
-            name: "Home"
+            name: "homeButton"
         },
         {
             to: "/items",
             icon: <GrCubes />,
-            name: "Items"
+            name: "itemsButton"
         },
         {
             to: "/story",
             icon: <GrBook />,
-            name: "Story"
+            name: "storyButton"
         },
         {
             to: "/character",
             icon: <RiRobot2Line />,
-            name: "Character"
+            name: "charactersButton"
         },
         {
             to: "/structure",
             icon: <IoCubeOutline />,
-            name: "Structure"
+            name: "structuresButton"
         },
         {
             to: "/terrain",
             icon: <IoEarthOutline />,
-            name: "Terrain"
+            name: "terrainButton"
         }
     ];
 
