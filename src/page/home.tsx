@@ -6,7 +6,6 @@ import "../data/localization";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
 import { Project, usePageContext } from "../data/model/project";
-import { useEffect, useState } from "react";
 
 function createProject(t: any, setProject: any) {
     return async () => {

@@ -29,15 +29,16 @@ export default function Root() {
     });
 
     return (
-        <div className="w-full h-full font-mono text-light">
+        <div className="ont-mono text-light" style={{ height: "calc(100% - 32px)" }}>
             <Toaster
+                position="top-right"
                 containerClassName="mt-6"
                 toastOptions={{
                     className: "bg-darker text-light"
                 }}
             />
-            <TitleBar />
-            <div className="flex flex-grow gap-4 m-2">
+            <TitleBar className="h-8" />
+            <div className="flex h-full gap-4 p-2">
                 <SideBar projectLoaded={project != null} />
                 <div className="w-full overflow-y-auto" ref={pageContainer}>
                     <Outlet context={{

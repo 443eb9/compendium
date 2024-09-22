@@ -5,10 +5,10 @@ import { IoClose } from "react-icons/io5";
 const buttonStyle = "flex justify-center items-center w-12 transition-colors";
 const appWindow = getCurrentWindow();
 
-export default function TitleBar() {
+export default function TitleBar({ className }: { className?: string }) {
     return (
         <div
-            className="flex w-full h-8 justify-between backdrop-blur-md shadow-md"
+            className={`flex w-full justify-between backdrop-blur-md shadow-md ${className}`}
             data-tauri-drag-region
         >
             <div className="flex gap-2 items-center m-2">
