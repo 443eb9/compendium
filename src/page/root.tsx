@@ -26,8 +26,12 @@ export default function Root() {
         }
 
         setMounted(true);
-        setContainerWidth(pageContainer.current?.parentElement?.clientWidth ?? 0);
+        setContainerWidth(pageContainer.current?.clientWidth ?? 0);
         initKeyboardEvent();
+
+        addEventListener("resize", () => {
+            setContainerWidth(pageContainer.current?.clientWidth ?? 0);
+        });
     });
 
     return (

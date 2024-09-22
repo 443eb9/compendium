@@ -10,6 +10,14 @@ export default function TitleBar({ className }: { className?: string }) {
         <div
             className={`flex w-full justify-between ${className}`}
             data-tauri-drag-region
+            onClick={(ev) => {
+                if (ev.buttons === 1) {
+                    console.log(ev.detail)
+                    ev.detail === 2
+                        ? appWindow.toggleMaximize()
+                        : appWindow.startDragging();
+                }
+            }}
         >
             <div className="flex gap-2 items-center m-2">
                 <img src="tauri.svg" alt="favicon" className="h-full" data-tauri-drag-region />

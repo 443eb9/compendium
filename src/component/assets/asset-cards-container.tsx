@@ -3,9 +3,9 @@ import { PageContext } from "../../data/model/project";
 import AssetCard from "./asset-card";
 
 export default function AssetCardsContainer({
-    className, assets, context
+    className, assets, context, cols
 }: {
-    className?: string, assets: Asset[], context: PageContext
+    className?: string, assets: Asset[], context: PageContext, cols: number
 }) {
     function updateCallback(index: number) {
         return (newAsset: Asset) => {
@@ -16,7 +16,7 @@ export default function AssetCardsContainer({
     }
 
     return (
-        <div className={className}>
+        <div className={`grid gap-2 ${className}`} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
             {
                 assets
                     .map((asset, i) => {

@@ -79,7 +79,7 @@ export default function AssetCard({
                     }} />
                 </ListElement>
                 <ListElement labelClassName="w-24" label={t("AssetPath")}>
-                    <div className="flex gap-2">
+                    <div className="flex flex-grow gap-2">
                         <Input className="flex flex-grow" defaultValue={curAsset.path} onChange={() => setEditing(true)} readOnly />
                         <Button
                             className="px-3"

@@ -9,12 +9,14 @@ import { usePageContext } from "../data/model/project";
 import { useNavigate } from "react-router-dom";
 import { generateId } from "../data/model/common";
 import ProjectSave from "../component/project-save";
+import OperationBar from "../component/common/operation-bar";
 
 export default function AssetsPage() {
     const { t } = useTranslation();
     const [settingsMode, setSettingsMode] = useState(false);
     const context = usePageContext();
-    const { project, setProject } = context;
+    const { project, setProject, containerWidth } = context;
+    const cols = Math.floor(containerWidth / 500);
 
     if (project == null) {
         useNavigate()("/");
@@ -48,7 +50,7 @@ export default function AssetsPage() {
     return (
         <div className="flex flex-col gap-2">
             <ProjectSave />
-            <div className="sticky flex gap-2 h-12 py-1 top-0 backdrop-blur-md z-20 shadow-md">
+            <OperationBar>
                 <LabelledButton
                     label={t("CreateAsset")}
                     className={settingsMode ? "hidden" : ""}
@@ -70,21 +72,24 @@ export default function AssetsPage() {
                 >
                     <IoSettingsOutline className="text-xl" />
                 </LabelledButton>
+            </OperationBar>
+            <div>
+                {
+                    settingsMode
+                        ? <AssetSettings
+                            settings={project.assetSettings}
+                            setSettings={
+                                (s) => setProject({ ...project, assetSettings: s })
+                            }
+                        />
+                        : <AssetCardsContainer
+                            className="w-full h-full"
+                            assets={project.assets}
+                            context={context}
+                            cols={cols}
+                        />
+                }
             </div>
-            {
-                settingsMode
-                    ? <AssetSettings
-                        settings={project.assetSettings}
-                        setSettings={
-                            (s) => setProject({ ...project, assetSettings: s })
-                        }
-                    />
-                    : <AssetCardsContainer
-                        className="w-full h-full"
-                        assets={project.assets}
-                        context={context}
-                    />
-            }
         </div>
     );
 }
