@@ -1,3 +1,4 @@
+import OperationBar from "../component/common/operation-bar";
 import ProjectSave from "../component/project-save";
 import { usePageContext } from "../data/model/project";
 
@@ -8,6 +9,11 @@ export default function ItemsPage() {
     return (
         <div className="">
             <ProjectSave />
+            <OperationBar
+                operations={[
+
+                ]}
+            />
         </div>
     );
 }
