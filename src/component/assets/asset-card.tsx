@@ -20,31 +20,30 @@ export default function AssetCard({
 
     function getPreview(asset: Asset) {
         if (asset.path == "") {
-            return <div className=""></div>;
+            return <div className="italic">{t("PreviewNotAvailable")}</div>;
         }
 
         const path = convertFileSrc(asset.path);
-
         switch (asset.ty) {
             case AssetType.Image:
                 return <AssetImgPreview src={path} />;
             default:
-                return <div className="">{t("PreviewHint")}</div>
+                return <div className="italic">{t("PreviewNotSupport")}</div>
         }
     }
     const preview = getPreview(curAsset);
 
     return (
         <div className="flex gap-4 m-2">
-            <div className="w-1/2">
+            <div className="w-full max-w-[360px]">
                 <h2>{t("AssetPreview")}</h2>
                 {preview}
             </div>
             <div className="flex flex-col gap-2 w-full">
-                <ListElement labelClassName="w-48" label={t("AssetType")}>
+                <ListElement labelClassName="w-24" label={t("AssetType")}>
                     <DropDownSelection
                         defaultValue={curAsset.ty}
-                        className="w-full h-full"
+                        className="flex flex-grow"
                         labels={[
                             AssetType[AssetType.Image],
                             AssetType[AssetType.Video],
@@ -64,15 +63,15 @@ export default function AssetCard({
                         })}
                     />
                 </ListElement>
-                <ListElement labelClassName="w-48" label={t("AssetId")}>
-                    <Input className="w-full" defaultValue={curAsset.id} readOnly />
+                <ListElement labelClassName="w-24" label={t("AssetId")}>
+                    <Input className="flex flex-grow" defaultValue={curAsset.id} readOnly />
                 </ListElement>
-                <ListElement labelClassName="w-48" label={t("AssetName")}>
-                    <Input className="w-full" defaultValue={curAsset.name} onChange={() => setEditing(true)} />
+                <ListElement labelClassName="w-24" label={t("AssetName")}>
+                    <Input className="flex flex-grow" defaultValue={curAsset.name} onChange={() => setEditing(true)} />
                 </ListElement>
-                <ListElement labelClassName="w-48" label={t("AssetPath")}>
-                    <div className="flex gap-2 w-full">
-                        <Input className="w-full" defaultValue={curAsset.path} onChange={() => setEditing(true)} readOnly />
+                <ListElement labelClassName="w-24" label={t("AssetPath")}>
+                    <div className="flex gap-2">
+                        <Input className="flex flex-grow" defaultValue={curAsset.path} onChange={() => setEditing(true)} readOnly />
                         <Button
                             className="px-3"
                             onClick={async () => {

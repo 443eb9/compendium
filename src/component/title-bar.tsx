@@ -8,7 +8,7 @@ const appWindow = getCurrentWindow();
 export default function TitleBar({ className }: { className?: string }) {
     return (
         <div
-            className={`flex w-full justify-between backdrop-blur-md shadow-md ${className}`}
+            className={`flex w-full justify-between ${className}`}
             data-tauri-drag-region
         >
             <div className="flex gap-2 items-center m-2">

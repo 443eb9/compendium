@@ -24,3 +24,21 @@ img {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+    width: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #303030;
+    border: 2px solid #404040;
+}

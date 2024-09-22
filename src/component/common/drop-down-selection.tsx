@@ -14,33 +14,34 @@ export default function DropDownSelection({
 }) {
     const { t } = useTranslation();
     const [selected, setSelected] = useState(defaultValue);
-    const [expanded, setExpanded] = useState(false);
+    const [isExpanded, setExpanded] = useState(false);
 
     return (
         <div className={`relative ${className}`}>
             <div
                 className={
-                    `flex items-center h-9 px-1 focus:outline-none border-2
-                     ${expanded
+                    `flex flex-grow items-center h-9 px-2 focus:outline-none border-2
+                     ${isExpanded
                         ? "bg-darker border-outline border-b-transparent"
                         : "bg-semidarker border-transparent hover:border-outline"}`
                 }
-                onClick={() => setExpanded(!expanded)}
+                onClick={() => setExpanded(!isExpanded)}
                 style={{
                     borderTopLeftRadius: "6px",
                     borderTopRightRadius: "6px",
-                    borderBottomLeftRadius: expanded ? "0" : "6px",
-                    borderBottomRightRadius: expanded ? "0" : "6px",
+                    borderBottomLeftRadius: isExpanded ? "0" : "6px",
+                    borderBottomRightRadius: isExpanded ? "0" : "6px",
                 }}
             >
                 {t(labels[selected])}
             </div>
             <div
                 className={
-                    `absolute flex-col z-10 overflow-hidden w-full transition-all bg-darker border-x-2 border-b-2 border-outline
-                    ${expanded ? "flex" : "hidden"}`
+                    `absolute flex top-9 flex-col z-10 overflow-hidden w-full transition-all bg-darker border-x-2 border-b-2 border-outline
+                    ${isExpanded ? "scale-y-100" : "scale-y-0"}`
                 }
                 style={{
+                    transformOrigin: "top",
                     borderBottomLeftRadius: "6px",
                     borderBottomRightRadius: "6px",
                 }}
@@ -49,7 +50,7 @@ export default function DropDownSelection({
                     options.map((_, i) =>
                         <Button
                             key={i}
-                            className="flex flex-col px-1"
+                            className="flex flex-col mx-1 px-1"
                             onClick={() => {
                                 setSelected(i);
                                 setExpanded(false);

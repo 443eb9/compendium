@@ -12,11 +12,16 @@ export default function SideBarButton({ to, icon, name, isSelecting }: { to: str
                 <div className="text-2xl">
                     {typeof icon == "string" ? <img src={icon} alt="icon" /> : icon}
                 </div>
-                <h2 className="relative font-bold text-md">{t(name)}
-                    {
-                        isSelecting && <div className="absolute w-full h-1 -bottom-2 rounded-full bg-accent"></div>
-                    }
-                </h2>
+                <div className="relative font-bold text-md">
+                    <h3>{t(name)}</h3>
+                    <div
+                        className="absolute h-1 -bottom-2 rounded-full bg-accent transition-all"
+                        style={{
+                            width: isSelecting ? "100%" : "0"
+                        }}
+                    >
+                    </div>
+                </div>
             </Button>
         </Link>
     );

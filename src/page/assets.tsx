@@ -50,7 +50,7 @@ export default function AssetsPage() {
 
     return (
         <div className="flex flex-col gap-2">
-            <div className="flex gap-2 h-10">
+            <div className="sticky flex gap-2 h-12 py-1 top-0 backdrop-blur-md z-20 shadow-md">
                 <LabelledButton
                     label={t("CreateAsset")}
                     className={settingsMode ? "hidden" : ""}

@@ -29,7 +29,7 @@ export default function Root() {
     });
 
     return (
-        <div className="ont-mono text-light" style={{ height: "calc(100% - 32px)" }}>
+        <div className="font-mono text-light" style={{ height: "calc(100% - 32px)" }}>
             <Toaster
                 position="top-right"
                 containerClassName="mt-6"
