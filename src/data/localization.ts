@@ -21,6 +21,7 @@ i18n.use(initReactI18next).init({
 
                 "Image": "Image",
                 "Video": "Video",
+                "Audio": "Audio",
                 "Text": "Text",
                 "Model": "Model",
 
@@ -57,9 +58,10 @@ i18n.use(initReactI18next).init({
                 "AssetName": "Name",
                 "AssetPath": "Path",
                 "PreviewNotSupport": "Currently, preview only supports for image assets.",
-                "PreviewNotAvailable": "Preview is not available.",
+                "PreviewNotAvailable": "No asset is chosen. Preview is not available.",
                 "IdTypeSection": "ID Type",
                 "NextId": "Next ID",
+                "UnrecognizedFileType": "Failed to recognize type of this file. Are you sure this is a valid asset?"
             },
         },
     },

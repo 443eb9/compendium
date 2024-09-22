@@ -21,10 +21,6 @@ export default function AssetsPage() {
     }
 
     function updateAssets() {
-        console.log(generateId(
-            project.assetSettings.idType,
-            project.assetSettings.nextId,
-        ));
         const { id, next } = generateId(
             project.assetSettings.idType,
             project.assetSettings.nextId,

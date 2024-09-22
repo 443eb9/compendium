@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "./button";
 
-export default function DropDownSelection({
+export default function DropdownSection({
     className, options, labels, defaultValue, setEditing, onChange
 }: {
     className?: string,
@@ -15,6 +15,13 @@ export default function DropDownSelection({
     const { t } = useTranslation();
     const [selected, setSelected] = useState(defaultValue);
     const [isExpanded, setExpanded] = useState(false);
+
+    // TODO disgusting redundant `useEffect`
+    useEffect(() => {
+        if (selected != defaultValue) {
+            setSelected(defaultValue);
+        }
+    });
 
     return (
         <div className={`relative ${className}`}>
@@ -33,7 +40,7 @@ export default function DropDownSelection({
                     borderBottomRightRadius: isExpanded ? "0" : "6px",
                 }}
             >
-                {t(labels[selected])}
+                {t(labels[(() => { console.log(selected); return selected })()])}
             </div>
             <div
                 className={
