@@ -40,8 +40,6 @@ function openProject(t: any, setProject: any) {
             return;
         }
 
-        console.log(file);
-
         invoke("open_project", { path: file })
             .then(() => {
                 toast.success(t("ProjectOpenSuccess"));

@@ -7,7 +7,9 @@ use tauri::{
 
 use crate::project::{
     io::{ProjectOpenError, PROJECT},
-    model::{Project, ProjectCloseError, ProjectCreationError, ProjectFetchError},
+    model::{
+        Project, ProjectCloseError, ProjectCreationError, ProjectFetchError, ProjectUpdateError,
+    },
 };
 
 pub mod io;
@@ -58,4 +60,21 @@ pub fn fetch_project(
         ))),
         None => Err(ProjectFetchError::ProjectUninitialized),
     }
+}
+
+#[tauri::command]
+pub fn update_project(
+    new_project: String,
+    project: State<Mutex<Option<Project>>>,
+) -> Result<(), ProjectUpdateError> {
+    let mut project = project
+        .lock()
+        .map_err(|_| ProjectUpdateError::ProjectUninitialized)?;
+    let new_project =
+        serde_json::from_str(&new_project).map_err(|_| ProjectUpdateError::InvalidProject)?;
+
+    io::write_project(&new_project)?;
+    *project = Some(new_project);
+
+    Ok(())
 }

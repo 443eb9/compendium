@@ -60,6 +60,16 @@ pub enum ProjectFetchError {
     ProjectUninitialized,
 }
 
+#[derive(Debug, Error, SerializableError)]
+pub enum ProjectUpdateError {
+    #[error("ProjectUpdateErrorProjectUninitialized")]
+    ProjectUninitialized,
+    #[error("ProjectUpdateErrorInvalidProject")]
+    InvalidProject,
+    #[error("{0}")]
+    WritingError(#[from] ProjectWritingError),
+}
+
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Asset {

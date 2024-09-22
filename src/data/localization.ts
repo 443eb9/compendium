@@ -34,6 +34,10 @@ i18n.use(initReactI18next).init({
                 "TerrainButton": "Terrain",
                 "AssetsButton": "Assets",
 
+                "ProjectUpdateSuccess": "Successfully updated project!",
+                "ProjectUpdateErrorProjectUninitialized": "Project update failed: Project uninitialized.",
+                "ProjectUpdateErrorInvalidProject": "Project update failed: Invalid project.",
+
                 // Home
                 "WelcomeText": "Hi, welcome to Compendium, a tool that empowers game developers to build their world with help of code easier and faster.",
                 "OpenProject": "Open Project",

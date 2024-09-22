@@ -8,6 +8,7 @@ import LabelledButton from "../component/common/labelled-button";
 import { usePageContext } from "../data/model/project";
 import { useNavigate } from "react-router-dom";
 import { generateId } from "../data/model/common";
+import ProjectSave from "../component/project-save";
 
 export default function AssetsPage() {
     const { t } = useTranslation();
@@ -46,6 +47,7 @@ export default function AssetsPage() {
 
     return (
         <div className="flex flex-col gap-2">
+            <ProjectSave />
             <div className="sticky flex gap-2 h-12 py-1 top-0 backdrop-blur-md z-20 shadow-md">
                 <LabelledButton
                     label={t("CreateAsset")}

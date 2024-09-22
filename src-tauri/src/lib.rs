@@ -16,7 +16,8 @@ pub fn run() {
             project::create_project,
             project::open_project,
             project::close_project,
-            project::fetch_project
+            project::fetch_project,
+            project::update_project
         ])
         .setup(|app| {
             app.manage(Mutex::<Option<Project>>::new(None));

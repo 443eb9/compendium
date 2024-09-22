@@ -40,7 +40,7 @@ export default function DropdownSection({
                     borderBottomRightRadius: isExpanded ? "0" : "6px",
                 }}
             >
-                {t(labels[(() => { console.log(selected); return selected })()])}
+                {t(labels[selected])}
             </div>
             <div
                 className={

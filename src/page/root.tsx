@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { useEffect, useRef, useState } from "react";
 import { Project } from "../data/model/project";
 import { invoke } from "@tauri-apps/api/core";
+import { initKeyboardEvent } from "../data/keyboard";
 
 export default function Root() {
     const [project, setProject] = useState<Project | null>(null);
@@ -13,19 +14,20 @@ export default function Root() {
     const [isMounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setContainerWidth(pageContainer.current?.parentElement?.clientWidth ?? 0);
-    });
-
-    useEffect(() => {
         if (isMounted) {
             return;
         }
+
         if (project == null) {
             invoke("fetch_project")
                 .then((project) => setProject(project as Project))
                 .catch(() => { });
+            console.log(project)
         }
+
         setMounted(true);
+        setContainerWidth(pageContainer.current?.parentElement?.clientWidth ?? 0);
+        initKeyboardEvent();
     });
 
     return (
@@ -43,10 +45,7 @@ export default function Root() {
                 <div className="w-full overflow-y-auto" ref={pageContainer}>
                     <Outlet context={{
                         project: project,
-                        setProject: (proj: Project) => {
-                            console.log(proj);
-                            setProject(proj);
-                        },
+                        setProject: setProject,
                         containerWidth: containerWidth,
                     }} />
                 </div>

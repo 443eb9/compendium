@@ -1,5 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import { Asset, AssetSettingsData } from "./assets";
+import { Dispatch, SetStateAction } from "react";
 
 export type Project = {
     path: string,
@@ -10,7 +11,7 @@ export type Project = {
 
 export type PageContext = {
     project: Project,
-    setProject: (proj: Project) => void,
+    setProject: Dispatch<SetStateAction<Project | null>>,
     containerWidth: number,
 }
 

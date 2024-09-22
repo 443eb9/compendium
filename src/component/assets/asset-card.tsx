@@ -43,7 +43,7 @@ export default function AssetCard({
             <div className="flex flex-col gap-2 w-full">
                 <ListElement labelClassName="w-24" label={t("AssetType")}>
                     <DropdownSection
-                        defaultValue={(() => { console.log(curAsset.ty); return curAsset.ty; })()}
+                        defaultValue={curAsset.ty}
                         className="flex flex-grow"
                         labels={[
                             AssetType[AssetType.Image],
@@ -95,7 +95,6 @@ export default function AssetCard({
                                             path: file,
                                         });
                                     } else {
-                                        console.log(ty);
                                         setCurAsset({
                                             ...curAsset,
                                             path: file,
