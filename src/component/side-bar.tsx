@@ -3,45 +3,51 @@ import SideBarButton from "./side-bar-button";
 import { RiRobot2Line } from "react-icons/ri";
 import { IoCubeOutline, IoEarthOutline } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
+import { MdWallpaper } from "react-icons/md";
 
 export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
     const pages = [
         {
             to: "/",
             icon: <GrHome />,
-            name: "homeButton"
+            name: "HomeButton"
+        },
+        {
+            to: "/assets",
+            icon: <MdWallpaper />,
+            name: "AssetsButton"
         },
         {
             to: "/items",
             icon: <GrCubes />,
-            name: "itemsButton"
+            name: "ItemsButton"
         },
         {
             to: "/story",
             icon: <GrBook />,
-            name: "storyButton"
+            name: "StoryButton"
         },
         {
             to: "/character",
             icon: <RiRobot2Line />,
-            name: "charactersButton"
+            name: "CharactersButton"
         },
         {
             to: "/structure",
             icon: <IoCubeOutline />,
-            name: "structuresButton"
+            name: "StructuresButton"
         },
         {
             to: "/terrain",
             icon: <IoEarthOutline />,
-            name: "terrainButton"
-        }
+            name: "TerrainButton"
+        },
     ];
 
     const location = useLocation();
 
     return (
-        <div className="flex flex-col min-w-24 gap-6 h-full">
+        <div className="flex flex-col w-24 gap-6 h-full">
             {
                 pages.filter((_, i) => projectLoaded || i == 0).map((page, i) =>
                     <SideBarButton

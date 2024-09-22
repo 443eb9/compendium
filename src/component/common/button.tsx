@@ -1,9 +1,17 @@
+import clsx from "clsx";
 import { MouseEventHandler, ReactNode } from "react";
 
-export default function Button({ children, className, onClick }: { children?: ReactNode, className?: string, onClick?: MouseEventHandler<HTMLButtonElement> }) {
+export default function Button({
+    children, className, noOutline, onClick
+}: {
+    children?: ReactNode, className?: string, noOutline?: boolean, onClick?: MouseEventHandler<HTMLButtonElement>
+}) {
     return (
         <button
-            className={`hover:bg-hover-dark transition-colors rounded-md ${className}`}
+            className={clsx(
+                `hover:bg-semidarker border-outline transition-colors rounded-md ${className}`,
+                { "border-2": !noOutline }
+            )}
             onClick={onClick}
         >
             {children}

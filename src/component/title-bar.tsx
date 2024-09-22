@@ -8,7 +8,7 @@ const appWindow = getCurrentWindow();
 export default function TitleBar() {
     return (
         <div
-            className="flex h-8 justify-between"
+            className="flex w-full h-8 justify-between backdrop-blur-md shadow-md"
             data-tauri-drag-region
         >
             <div className="flex gap-2 items-center m-2">
@@ -16,8 +16,8 @@ export default function TitleBar() {
                 <h1 data-tauri-drag-region>Compendium</h1>
             </div>
             <div className="flex">
-                <button className={`${buttonStyle} hover:bg-hover-dark`} onClick={() => appWindow.minimize()}><FiMinimize /></button>
-                <button className={`${buttonStyle} hover:bg-hover-dark`} onClick={() => appWindow.toggleMaximize()}><FiMaximize /></button>
+                <button className={`${buttonStyle} hover:bg-darker`} onClick={() => appWindow.minimize()}><FiMinimize /></button>
+                <button className={`${buttonStyle} hover:bg-darker`} onClick={() => appWindow.toggleMaximize()}><FiMaximize /></button>
                 <button className={`${buttonStyle} hover:bg-red-500`} onClick={() => appWindow.close()}><IoClose /></button>
             </div>
         </div>

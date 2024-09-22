@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import "../data/localization";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
-import { Project, useProjectContext } from "../data/model/project";
+import { Project, usePageContext } from "../data/model/project";
 import { useEffect, useState } from "react";
 
 function createProject(t: any, setProject: any) {
@@ -21,7 +21,7 @@ function createProject(t: any, setProject: any) {
 
         invoke("create_project", { path: file })
             .then(() => {
-                toast.success(t("projectCreateSuccess"));
+                toast.success(t("ProjectCreateSuccess"));
                 invoke("fetch_project")
                     .then((project) => setProject(project as Project))
                     .catch((err) => toast.error(t(err)));
@@ -45,12 +45,12 @@ function openProject(t: any, setProject: any) {
 
         invoke("open_project", { path: file })
             .then(() => {
-                toast.success(t("projectOpenSuccess"));
+                toast.success(t("ProjectOpenSuccess"));
                 invoke("fetch_project")
                     .then((project) => setProject(project as Project))
                     .catch((err) => toast.error(t(err)));
             })
-            .catch((err) => toast.error(err));
+            .catch((err) => toast.error(t(err)));
     };
 }
 
@@ -59,7 +59,7 @@ function closeProject(t: any, setProject: any) {
         invoke("close_project")
             .then(() => {
                 setProject(null);
-                toast.success(t("projectCloseSuccess"));
+                toast.success(t("ProjectCloseSuccess"));
             })
             .catch((err) => toast.error(t(err)));
     }
@@ -67,48 +67,36 @@ function closeProject(t: any, setProject: any) {
 
 export default function HomePage() {
     const { t } = useTranslation();
-    const [project, setProject] = useProjectContext();
-    const [isMounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        invoke("fetch_project")
-            .then((project) => setProject(project as Project))
-            .catch(() => { });
-        setMounted(true);
-    });
+    const { project, setProject } = usePageContext();
 
     return (
         <div className="flex flex-col w-full p-5 gap-8">
             <div className="flex flex-col w-full items-center gap-4">
                 <img src="tauri.svg" alt="" className="max-w-14" />
                 <div>
-                    {t("welcomeText")}
+                    {t("WelcomeText")}
                 </div>
             </div>
             {
-                isMounted
-                    ? (
-                        project != null
-                            ? <div className="flex flex-col gap-1 text-lg font-bold">
-                                <div className="italic">{project.name}</div>
-                                <div className="italic">At {project.path}</div>
-                                <Button className="flex items-center gap-2 p-1 pl-2 w-48" onClick={closeProject(t, setProject)}>
-                                    <AiOutlineFolderAdd />
-                                    <h3>{t("closeProject")}</h3>
-                                </Button>
-                            </div>
-                            : <div className="flex flex-col w-48 gap-2 text-lg">
-                                <Button className="flex items-center gap-2 p-1 pl-2" onClick={openProject(t, setProject)}>
-                                    <AiOutlineFolderOpen />
-                                    <h3>{t("openProject")}</h3>
-                                </Button>
-                                <Button className="flex items-center gap-2 p-1 pl-2" onClick={createProject(t, setProject)}>
-                                    <AiOutlineFolderAdd />
-                                    <h3>{t("createProject")}</h3>
-                                </Button>
-                            </div>
-                    )
-                    : ""
+                project != null
+                    ? <div className="flex flex-col gap-1 text-lg font-bold">
+                        <div className="italic">{project.name}</div>
+                        <div className="italic">At {project.path}</div>
+                        <Button className="flex items-center gap-2 p-1 pl-2 w-48" onClick={closeProject(t, setProject)}>
+                            <AiOutlineFolderAdd />
+                            <h3>{t("CloseProject")}</h3>
+                        </Button>
+                    </div>
+                    : <div className="flex flex-col w-48 gap-2 text-lg">
+                        <Button className="flex items-center gap-2 p-1 pl-2" onClick={openProject(t, setProject)}>
+                            <AiOutlineFolderOpen />
+                            <h3>{t("OpenProject")}</h3>
+                        </Button>
+                        <Button className="flex items-center gap-2 p-1 pl-2" onClick={createProject(t, setProject)}>
+                            <AiOutlineFolderAdd />
+                            <h3>{t("CreateProject")}</h3>
+                        </Button>
+                    </div>
             }
         </div>
     );

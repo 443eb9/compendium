@@ -6,6 +6,7 @@ import CharacterPage from "./page/character";
 import StoryPage from "./page/story";
 import StructurePage from "./page/structure";
 import TerrainPage from "./page/terrain";
+import AssetsPage from "./page/assets";
 
 export const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
             {
                 path: "/terrain",
                 element: <TerrainPage />
+            },
+            {
+                path: "/assets",
+                element: <AssetsPage />
             }
         ]
     }

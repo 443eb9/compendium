@@ -8,7 +8,7 @@ export default function SideBarButton({ to, icon, name, isSelecting }: { to: str
 
     return (
         <Link to={to} className="flex w-full h-14 justify-center items-center">
-            <Button className="flex flex-col w-full h-full justify-center items-center pt-1">
+            <Button className="flex flex-col w-full h-full justify-center items-center pt-1" noOutline>
                 <div className="text-2xl">
                     {typeof icon == "string" ? <img src={icon} alt="icon" /> : icon}
                 </div>

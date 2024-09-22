@@ -7,37 +7,36 @@ use std::{
 use compendium_macros::SerializableError;
 use thiserror::Error;
 
-use crate::project::Project;
+use crate::project::model::Project;
 
-pub const PROJECT_META: &str = "compendium_project.json";
+pub const PROJECT: &str = "compendium_project.json";
 
 #[derive(Debug, Error, SerializableError)]
 pub enum ProjectWritingError {
-    #[error("projectWritingErrorIoError")]
+    #[error("ProjectWritingErrorIoError")]
     IoError,
-    #[error("projectWritingErrorInterrupted")]
+    #[error("ProjectWritingErrorInterrupted")]
     Interrupted,
 }
 
 #[derive(Debug, Error, SerializableError)]
 pub enum ProjectOpenError {
-    #[error("projectOpenErrorIoError")]
+    #[error("ProjectOpenErrorIoError")]
     IoError,
-    #[error("projectOpenErrorDeserializingError")]
+    #[error("ProjectOpenErrorDeserializingError")]
     DeserializingError,
 }
 
-pub fn write_project_meta(project: &Project) -> Result<(), ProjectWritingError> {
+pub fn write_project(project: &Project) -> Result<(), ProjectWritingError> {
     File::create(project.meta_path())
         .map_err(|_| ProjectWritingError::IoError)?
         .write_all(serde_json::to_string(project).unwrap().as_bytes())
         .map_err(|_| ProjectWritingError::Interrupted)
 }
 
-pub fn open_project(path: String) -> Result<Project, ProjectOpenError> {
+pub fn read_project(path: String) -> Result<Project, ProjectOpenError> {
     serde_json::from_str(
-        &read_to_string(Path::new(&path).join(PROJECT_META))
-            .map_err(|_| ProjectOpenError::IoError)?,
+        &read_to_string(Path::new(&path).join(PROJECT)).map_err(|_| ProjectOpenError::IoError)?,
     )
     .map_err(|_| ProjectOpenError::DeserializingError)
 }

@@ -8,7 +8,9 @@ export default {
       colors: {
         "light": "#f5f5f5",
         "dark": "#171717",
-        "hover-dark": "#262626",
+        "darker": "#262626",
+        "semidarker": "#303030",
+        "outline": "#404040",
         "accent": "#8b5cf6"
       }
     },
