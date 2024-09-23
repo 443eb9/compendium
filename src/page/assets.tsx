@@ -1,12 +1,10 @@
 import { IoAdd } from "react-icons/io5";
 import { useState } from "react";
 import { AssetType } from "../data/model/assets";
-import AssetCardsContainer from "../component/assets/asset-cards-container";
-import AssetsSettings from "../component/assets/assets-settings";
 import { usePageContext } from "../data/model/project";
 import { useNavigate } from "react-router-dom";
 import { generateId } from "../data/model/common";
-import PageTemplate from "../component/common/page-template";
+import PageTemplate from "../component/common/templates/page-template";
 
 export default function AssetsPage() {
     const [settingsMode, setSettingsMode] = useState(false);
@@ -47,15 +45,6 @@ export default function AssetsPage() {
 
     return (
         <PageTemplate
-            settingsMode={settingsMode}
-            setSettingsMode={setSettingsMode}
-            settings={
-                <AssetsSettings
-                    settings={project.assetsSettings}
-                    setSettings={(s) => setProject({ ...project, assetsSettings: s })}
-                />
-            }
-            page={<AssetCardsContainer context={context} />}
             extraOperations={[
                 {
                     label: "CreateAsset",

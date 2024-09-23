@@ -17,8 +17,16 @@ i18n.use(initReactI18next).init({
                 "Settings": "Settings",
                 "CloseSettings": "Close Settings",
                 "SettingsSaveSuccess": "Successfully saved settings!",
+                "Add": "Add",
                 "Save": "Save",
                 "Generate": "Generate",
+                "Preview": "Preview",
+                "Type": "Type",
+                "Reference": "Reference",
+                "Id": "Id",
+                "Name": "Name",
+                "Path": "Path",
+                "Tags": "Tags",
 
                 "ProjectWritingError": "Project writing failed",
 
@@ -63,12 +71,7 @@ i18n.use(initReactI18next).init({
                 "ProjectOpenErrorDeserializingError": "Project open failed: Invalid project file.",
 
                 // Assets
-                "AssetPreview": "Preview",
                 "CreateAsset": "Create Asset",
-                "AssetType": "Type",
-                "AssetId": "Id",
-                "AssetName": "Name",
-                "AssetPath": "Path",
                 "PreviewNotSupport": "Currently, preview only supports for image assets.",
                 "PreviewNotAvailable": "No asset is chosen. Preview is not available.",
                 "IdTypeSection": "ID Type",

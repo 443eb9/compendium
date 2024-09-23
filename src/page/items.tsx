@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PageTemplate from "../component/common/page-template";
+import PageTemplate from "../component/common/templates/page-template";
 import { usePageContext } from "../data/model/project";
 import ItemCardsContainer from "../component/items/item-cards-container";
 import ItemSettings from "../component/items/items-settings";
@@ -19,8 +19,8 @@ export default function ItemsPage() {
 
     function createItem() {
         const { id, next } = generateId(
-            project.assetsSettings.idType,
-            project.assetsSettings.nextId,
+            project.itemsSettings.idType,
+            project.itemsSettings.nextId,
         );
 
         setProject({
@@ -38,7 +38,7 @@ export default function ItemsPage() {
                 ]
             ]),
             itemsSettings: {
-                ...project.assetsSettings,
+                ...project.itemsSettings,
                 nextId: next,
             }
         });
@@ -46,17 +46,6 @@ export default function ItemsPage() {
 
     return (
         <PageTemplate
-            settingsMode={settingsMode}
-            setSettingsMode={setSettingsMode}
-            page={
-                <ItemCardsContainer context={context} />
-            }
-            settings={
-                <ItemSettings
-                    settings={project.itemsSettings}
-                    setSettings={(s) => setProject({ ...project, itemsSettings: s })}
-                />
-            }
             extraOperations={[
                 {
                     label: "CreateItem",

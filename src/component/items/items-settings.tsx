@@ -1,17 +1,20 @@
-import { ItemsSettingsData } from "../../data/model/items";
+import { usePageContext } from "../../data/model/project";
 import IdSwitching from "../common/settings/id-switching";
 
-export default function ItemSettings({
-    settings, setSettings
-}: {
-    settings: ItemsSettingsData, setSettings: (settings: ItemsSettingsData) => void
-}) {
+export default function ItemSettings() {
+    const { project, setProject } = usePageContext();
+
     return (
         <div className="">
-            <IdSwitching ty={settings.idType} setIdType={(ty) => setSettings({
-                ...settings,
-                idType: ty,
-            })} />
+            <IdSwitching ty={project.itemsSettings.idType} setIdType={(ty) => {
+                setProject({
+                    ...project,
+                    itemsSettings: {
+                        ...project.itemsSettings,
+                        idType: ty,
+                    }
+                })
+            }} />
         </div>
     )
 }

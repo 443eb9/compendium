@@ -1,10 +1,10 @@
-import { IdType, Tag } from "./common"
+import { IdType, TagData } from "./common"
 
-export type Item = {
+export type ItemData = {
     id: string,
     reference: string,
     name: string,
-    tags: Set<Tag>,
+    tags: Set<TagData>,
 }
 
 export type ItemsSettingsData = {

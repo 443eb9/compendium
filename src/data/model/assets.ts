@@ -1,6 +1,6 @@
 import { IdType } from "./common"
 
-export type Asset = {
+export type AssetData = {
     ty: AssetType,
     id: string,
     name: string,

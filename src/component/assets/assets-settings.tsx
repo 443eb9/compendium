@@ -1,17 +1,20 @@
-import { AssetSettingsData } from "../../data/model/assets";
+import { usePageContext } from "../../data/model/project";
 import IdSwitching from "../common/settings/id-switching";
 
-export default function AssetsSettings({
-    settings, setSettings
-}: {
-    settings: AssetSettingsData, setSettings: (settings: AssetSettingsData) => void
-}) {
+export default function AssetsSettings() {
+    const { project, setProject } = usePageContext();
+
     return (
         <div>
-            <IdSwitching ty={settings.idType} setIdType={(ty) => setSettings({
-                ...settings,
-                idType: ty
-            })} />
+            <IdSwitching ty={project.assetsSettings.idType} setIdType={(ty) => {
+                setProject({
+                    ...project,
+                    assetsSettings: {
+                        ...project.assetsSettings,
+                        idType: ty,
+                    },
+                })
+            }} />
         </div>
     );
 }

@@ -24,7 +24,7 @@ export default function DropdownSection({
     });
 
     return (
-        <div className={`relative ${className}`}>
+        <div className={`relative flex flex-grow ${className}`}>
             <div
                 className={
                     `flex flex-grow items-center h-9 px-2 focus:outline-none border-2

@@ -7,7 +7,7 @@ export default function ListElement({
 }) {
     return (
         <div className={`flex h-9 justify-between items-center ${className}`}>
-            <h6 className={labelClassName}>{label}</h6>
+            <h6 className={`w-24 ${labelClassName}`}>{label}</h6>
             {children}
         </div>
     );

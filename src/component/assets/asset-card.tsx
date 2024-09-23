@@ -1,50 +1,32 @@
 import { useTranslation } from "react-i18next";
-import { Asset, AssetType, identifyAssetType } from "../../data/model/assets";
+import { AssetData, AssetType, identifyAssetType } from "../../data/model/assets";
 import ListElement from "../common/list-element";
 import { Input } from "../common/input";
 import Button from "../common/button";
 import { useState } from "react";
 import { open } from "@tauri-apps/plugin-dialog"
 import DropdownSection from "../common/dropdown-section";
-import AssetImgPreview from "./preview/asset-img-preview";
-import { convertFileSrc } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
+import AssetPreview from "./preview/asset-preview";
+import CardTemplate from "../common/templates/card-template";
+import CardListTemplate from "../common/templates/card-list-template";
 
 export default function AssetCard({
     asset, updateCallback
 }: {
-    asset: Asset, updateCallback: (asset: Asset) => void
+    asset: AssetData, updateCallback: (asset: AssetData) => void
 }) {
     const { t } = useTranslation();
     const [isEditing, setEditing] = useState(false);
     const [curAsset, setCurAsset] = useState(asset);
 
-    function getPreview(asset: Asset) {
-        if (asset.path == "") {
-            return <div className="italic">{t("PreviewNotAvailable")}</div>;
-        }
-
-        const path = convertFileSrc(asset.path);
-        switch (asset.ty) {
-            case AssetType.Image:
-                return <AssetImgPreview src={path} />;
-            default:
-                return <div className="italic">{t("PreviewNotSupport")}</div>
-        }
-    }
-    const preview = getPreview(curAsset);
-
     return (
-        <div className="flex gap-4 m-2">
-            <div className="w-full max-w-[360px]">
-                <h2>{t("AssetPreview")}</h2>
-                {preview}
-            </div>
-            <div className="flex flex-col gap-2 w-full">
-                <ListElement labelClassName="w-24" label={t("AssetType")}>
+        <CardTemplate>
+            <AssetPreview asset={curAsset} />
+            <CardListTemplate>
+                <ListElement label={t("Type")}>
                     <DropdownSection
                         defaultValue={curAsset.ty}
-                        className="flex flex-grow"
                         labels={[
                             AssetType[AssetType.Image],
                             AssetType[AssetType.Video],
@@ -66,11 +48,11 @@ export default function AssetCard({
                         })}
                     />
                 </ListElement>
-                <ListElement labelClassName="w-24" label={t("AssetId")}>
-                    <Input className="flex flex-grow" defaultValue={curAsset.id} readOnly />
+                <ListElement label={t("Id")}>
+                    <Input defaultValue={curAsset.id} readOnly />
                 </ListElement>
-                <ListElement labelClassName="w-24" label={t("AssetName")}>
-                    <Input className="flex flex-grow" defaultValue={curAsset.name} onChange={(ev) => {
+                <ListElement label={t("Name")}>
+                    <Input defaultValue={curAsset.name} onChange={(ev) => {
                         setEditing(true);
                         setCurAsset({
                             ...curAsset,
@@ -78,35 +60,33 @@ export default function AssetCard({
                         });
                     }} />
                 </ListElement>
-                <ListElement labelClassName="w-24" label={t("AssetPath")}>
-                    <div className="flex flex-grow gap-2">
-                        <Input className="flex flex-grow" defaultValue={curAsset.path} onChange={() => setEditing(true)} readOnly />
-                        <Button
-                            className="px-3"
-                            onClick={async () => {
-                                const file = await open({ title: "Select asset" });
-                                if (file != null) {
-                                    setEditing(true);
-                                    const ty = identifyAssetType(file);
-                                    if (ty == undefined) {
-                                        toast.error(t("UnrecognizedFileType"));
-                                        setCurAsset({
-                                            ...curAsset,
-                                            path: file,
-                                        });
-                                    } else {
-                                        setCurAsset({
-                                            ...curAsset,
-                                            path: file,
-                                            ty: ty,
-                                        });
-                                    }
+                <ListElement label={t("Path")}>
+                    <Input defaultValue={curAsset.path} onChange={() => setEditing(true)} readOnly />
+                    <Button
+                        className="h-full px-3 ml-2"
+                        onClick={async () => {
+                            const file = await open({ title: "Select asset" });
+                            if (file != null) {
+                                setEditing(true);
+                                const ty = identifyAssetType(file);
+                                if (ty == undefined) {
+                                    toast.error(t("UnrecognizedFileType"));
+                                    setCurAsset({
+                                        ...curAsset,
+                                        path: file,
+                                    });
+                                } else {
+                                    setCurAsset({
+                                        ...curAsset,
+                                        path: file,
+                                        ty: ty,
+                                    });
                                 }
-                            }}
-                        >
-                            {t("Browse")}
-                        </Button>
-                    </div>
+                            }
+                        }}
+                    >
+                        {t("Browse")}
+                    </Button>
                 </ListElement>
                 <Button
                     className={`py-1 ${isEditing ? "opacity-100" : "opacity-0"}`}
@@ -117,7 +97,7 @@ export default function AssetCard({
                 >
                     {t("Save")}
                 </Button>
-            </div>
-        </div>
+            </CardListTemplate>
+        </CardTemplate>
     );
 }

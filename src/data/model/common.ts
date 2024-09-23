@@ -10,7 +10,7 @@ export enum IdType {
     IncreasingSequence,
 }
 
-export type Tag = {
+export type TagData = {
     id: string,
     name: string,
     color: string,

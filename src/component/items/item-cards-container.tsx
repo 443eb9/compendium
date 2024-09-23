@@ -1,12 +1,12 @@
-import { Item } from "../../data/model/items";
-import { PageContext } from "../../data/model/project";
+import { ItemData } from "../../data/model/items";
+import { usePageContext } from "../../data/model/project";
 import ItemCard from "./item-card";
 
-export default function ItemCardsContainer({ context }: { context: PageContext }) {
-    const { project, setProject } = context;
+export default function ItemCardsContainer() {
+    const { project, setProject } = usePageContext();
 
     function updateCallback(id: string) {
-        return (newItem: Item) => {
+        return (newItem: ItemData) => {
             project.items.set(id, newItem);
             setProject(project);
         };

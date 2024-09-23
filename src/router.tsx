@@ -7,6 +7,11 @@ import StoryPage from "./page/story";
 import StructurePage from "./page/structure";
 import TerrainPage from "./page/terrain";
 import AssetsPage from "./page/assets";
+import TagsPage from "./page/tags";
+import AssetCardsContainer from "./component/assets/asset-cards-container";
+import AssetsSettings from "./component/assets/assets-settings";
+import ItemCardsContainer from "./component/items/item-cards-container";
+import ItemSettings from "./component/items/items-settings";
 
 export const router = createBrowserRouter([
     {
@@ -15,33 +20,57 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                path: "/",
-                element: <HomePage />
+                path: "/home",
+                element: <HomePage />,
             },
             {
                 path: "/items",
-                element: <ItemsPage />
+                element: <ItemsPage />,
+                children: [
+                    {
+                        path: "",
+                        element: <ItemCardsContainer />,
+                    },
+                    {
+                        path: "settings",
+                        element: <ItemSettings />,
+                    },
+                ]
             },
             {
                 path: "/character",
-                element: <CharacterPage />
+                element: <CharacterPage />,
             },
             {
                 path: "/story",
-                element: <StoryPage />
+                element: <StoryPage />,
             },
             {
                 path: "/structure",
-                element: <StructurePage />
+                element: <StructurePage />,
             },
             {
                 path: "/terrain",
-                element: <TerrainPage />
+                element: <TerrainPage />,
             },
             {
                 path: "/assets",
-                element: <AssetsPage />
-            }
-        ]
-    }
+                element: <AssetsPage />,
+                children: [
+                    {
+                        path: "",
+                        element: <AssetCardsContainer />,
+                    },
+                    {
+                        path: "settings",
+                        element: <AssetsSettings />,
+                    },
+                ],
+            },
+            {
+                path: "/tags",
+                element: <TagsPage />,
+            },
+        ],
+    },
 ]);

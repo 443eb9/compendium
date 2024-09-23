@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import SideBar from "../component/side-bar";
 import TitleBar from "../component/title-bar";
 import { Toaster } from "react-hot-toast";
@@ -12,6 +12,7 @@ export default function Root() {
     const pageContainer = useRef<HTMLDivElement | null>(null);
     const [containerWidth, setContainerWidth] = useState(0);
     const [isMounted, setMounted] = useState(false);
+    const nav = useNavigate();
 
     useEffect(() => {
         if (isMounted) {
@@ -39,6 +40,7 @@ export default function Root() {
         addEventListener("resize", () => {
             setContainerWidth(pageContainer.current?.clientWidth ?? 0);
         });
+        nav("/home");
     });
 
     return (

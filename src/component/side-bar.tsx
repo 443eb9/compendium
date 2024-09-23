@@ -1,14 +1,14 @@
 import { GrBook, GrCubes, GrHome } from "react-icons/gr";
 import SideBarButton from "./side-bar-button";
 import { RiRobot2Line } from "react-icons/ri";
-import { IoCubeOutline, IoEarthOutline } from "react-icons/io5";
+import { IoCubeOutline, IoEarthOutline, IoPricetag } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { MdWallpaper } from "react-icons/md";
 
 export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
     const pages = [
         {
-            to: "/",
+            to: "/home",
             icon: <GrHome />,
             name: "HomeButton"
         },
@@ -42,19 +42,24 @@ export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
             icon: <IoEarthOutline />,
             name: "TerrainButton"
         },
+        {
+            to: "/tags",
+            icon: <IoPricetag />,
+            name: "Tags",
+        }
     ];
 
     const location = useLocation();
 
     return (
-        <div className="flex flex-col w-24 gap-6 h-full">
+        <div className="flex flex-col min-w-28 pr-2 gap-6 h-full overflow-y-auto">
             {
                 pages.filter((_, i) => projectLoaded || i == 0).map((page, i) =>
                     <SideBarButton
                         key={i} to={page.to}
                         icon={page.icon}
                         name={page.name}
-                        isSelecting={location.pathname == page.to}
+                        isSelecting={location.pathname.search(page.to) != -1}
                     />
                 )
             }

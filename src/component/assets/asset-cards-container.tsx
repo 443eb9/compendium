@@ -1,17 +1,13 @@
-import { Asset } from "../../data/model/assets";
-import { PageContext } from "../../data/model/project";
+import { AssetData } from "../../data/model/assets";
+import { usePageContext } from "../../data/model/project";
 import AssetCard from "./asset-card";
 
-export default function AssetCardsContainer({
-    className, context
-}: {
-    className?: string, context: PageContext
-}) {
-    const { project, setProject, containerWidth } = context;
+export default function AssetCardsContainer() {
+    const { project, setProject, containerWidth } = usePageContext();
     const cols = Math.floor(containerWidth / 500);
 
     function updateCallback(id: string) {
-        return (newAsset: Asset) => {
+        return (newAsset: AssetData) => {
             project.assets.set(id, newAsset);
             setProject(project);
         };
@@ -19,7 +15,7 @@ export default function AssetCardsContainer({
 
     return (
         <div
-            className={`w-full h-full grid gap-2 ${className}`}
+            className="w-full h-full grid gap-2"
             style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
         >
             {
