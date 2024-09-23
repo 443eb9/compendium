@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import "../data/localization";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
-import { Project, usePageContext } from "../data/model/project";
+import { deserProject, usePageContext } from "../data/model/project";
 import { localizeError } from "../data/localization";
 
 function createProject(t: any, setProject: any) {
@@ -23,8 +23,8 @@ function createProject(t: any, setProject: any) {
             .then(() => {
                 toast.success(t("ProjectCreateSuccess"));
                 invoke("fetch_project")
-                    .then((project) => setProject(project as Project))
-                    .catch((err) => toast.error(localizeError(err, t)));
+                    .then((proj) => setProject(deserProject(proj as string)))
+                    .catch((err) => toast.error(t(err)));
             })
             .catch((err) => toast.error(localizeError(err, t)));
     };
@@ -45,8 +45,8 @@ function openProject(t: any, setProject: any) {
             .then(() => {
                 toast.success(t("ProjectOpenSuccess"));
                 invoke("fetch_project")
-                    .then((project) => setProject(project as Project))
-                    .catch((err) => toast.error(localizeError(err, t)));
+                    .then((proj) => setProject(deserProject(JSON.stringify(proj))))
+                    .catch((err) => toast.error(t(err)));
             })
             .catch((err) => toast.error(localizeError(err, t)));
     };

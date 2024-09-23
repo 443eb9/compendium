@@ -1,6 +1,5 @@
 use compendium_macros::SerializableError;
 use serde::Serialize;
-use tauri::ipc::InvokeError;
 use thiserror::Error;
 
 #[derive(Serialize)]
@@ -72,7 +71,7 @@ pub enum ProjectWritingError {
 }
 
 #[derive(Debug, Error, SerializableError)]
-pub enum ProjectOpenError {
+pub enum ProjectReadError {
     #[error("ProjectOpenErrorIoError")]
     IoError(#[from] std::io::Error),
     #[error("ProjectOpenErrorDeserializingError")]

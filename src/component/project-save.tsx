@@ -3,7 +3,7 @@ import { addKeyboardEvent, removeKeyboardEvent } from "../data/keyboard";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { usePageContext } from "../data/model/project";
+import { serProject, usePageContext } from "../data/model/project";
 import { localizeError } from "../data/localization";
 
 export default function ProjectSave() {
@@ -15,13 +15,7 @@ export default function ProjectSave() {
         addKeyboardEvent("s", (ev) => {
             console.log(project);
             if (ev.ctrlKey) {
-                invoke("update_project", {
-                    newProject: JSON.stringify({
-                        ...project,
-                        assets: Object.fromEntries(project.assets),
-                        items: Object.fromEntries(project.items),
-                    })
-                })
+                invoke("update_project", { newProject: serProject(project) })
                     .then(() => toast.success(t("ProjectUpdateSuccess")))
                     .catch((err) => toast.error(localizeError(err, t)));
             }

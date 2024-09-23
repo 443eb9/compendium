@@ -1,5 +1,4 @@
 import { IoAdd } from "react-icons/io5";
-import { useState } from "react";
 import { AssetType } from "../data/model/assets";
 import { usePageContext } from "../data/model/project";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +6,6 @@ import { generateId } from "../data/model/common";
 import PageTemplate from "../component/common/templates/page-template";
 
 export default function AssetsPage() {
-    const [settingsMode, setSettingsMode] = useState(false);
     const context = usePageContext();
     const { project, setProject } = context;
 
@@ -21,7 +19,8 @@ export default function AssetsPage() {
             project.assetsSettings.idType,
             project.assetsSettings.nextId,
         );
-        const newProject = {
+
+        setProject({
             ...project,
             assets: new Map([
                 ...project.assets,
@@ -39,8 +38,7 @@ export default function AssetsPage() {
                 ...project.assetsSettings,
                 nextId: next,
             }
-        };
-        setProject(newProject);
+        });
     }
 
     return (
@@ -49,7 +47,7 @@ export default function AssetsPage() {
                 {
                     label: "CreateAsset",
                     icon: <IoAdd className="text-2xl" />,
-                    className: settingsMode ? "hidden" : "",
+                    className: "",
                     onClick: createAsset,
                 }
             ]}

@@ -1,14 +1,13 @@
 import { Id, IdType } from "./common"
 
-export type ItemData = {
+export type TagData = {
     id: Id,
-    reference: Id,
     name: string,
     desc: string,
-    tags: Set<string>,
+    color: string,
 }
 
-export type ItemsSettingsData = {
+export type TagsSettingsData = {
     idType: IdType,
     nextId: number,
 }

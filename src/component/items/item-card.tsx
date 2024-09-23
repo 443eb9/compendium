@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { AssetData } from "../../data/model/assets";
 import { ItemData } from "../../data/model/items";
 import { usePageContext } from "../../data/model/project";
 import AssetPreview from "../assets/preview/asset-preview";
@@ -15,7 +14,7 @@ export default function ItemCard({
 }: {
     item: ItemData, updateCallback: (item: ItemData) => void
 }) {
-    const { project, setProject } = usePageContext();
+    const { project } = usePageContext();
     const { t } = useTranslation();
 
     return (
@@ -23,14 +22,32 @@ export default function ItemCard({
             <AssetPreview asset={project.assets.get(item.reference)} />
             <CardListTemplate>
                 <ListElement label={t("Id")}>
-                    <Input defaultValue={item.id} readOnly />
+                    <Input defaultValue={item.id.toString()} readOnly />
                 </ListElement>
                 <ListElement label={t("Reference")}>
-                    <Input defaultValue={item.reference} />
+                    <Input defaultValue={item.reference.toString()} onChange={(ev) => {
+                        updateCallback({
+                            ...item,
+                            reference: ev.target.value,
+                        });
+                    }} />
                     <Button className="h-full px-3 ml-2">{t("Browse")}</Button>
                 </ListElement>
                 <ListElement label={t("Name")}>
-                    <Input defaultValue={item.name} />
+                    <Input defaultValue={item.name} onChange={(ev) => {
+                        updateCallback({
+                            ...item,
+                            name: ev.target.value,
+                        })
+                    }} />
+                </ListElement>
+                <ListElement label={t("Desc")}>
+                    <Input defaultValue={item.desc} onChange={(ev) => {
+                        updateCallback({
+                            ...item,
+                            desc: ev.target.value,
+                        })
+                    }} />
                 </ListElement>
                 <ListElement label={t("Tags")}>
                     <TagsDisplay tags={item.tags} setTags={(newTags) => {

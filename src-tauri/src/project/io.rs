@@ -5,7 +5,7 @@ use std::{
 };
 
 use crate::{
-    err::{ProjectOpenError, ProjectWritingError},
+    err::{ProjectReadError, ProjectWritingError},
     project::model::Project,
 };
 
@@ -17,7 +17,7 @@ pub fn write_project(project: &Project) -> Result<(), ProjectWritingError> {
         .map_err(|_| ProjectWritingError::Interrupted)
 }
 
-pub fn read_project(path: String) -> Result<Project, ProjectOpenError> {
+pub fn read_project(path: String) -> Result<Project, ProjectReadError> {
     Ok(serde_json::from_str::<Project>(&read_to_string(
         Path::new(&path).join(PROJECT),
     )?)?)

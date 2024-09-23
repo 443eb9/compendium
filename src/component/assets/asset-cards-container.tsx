@@ -1,4 +1,5 @@
 import { AssetData } from "../../data/model/assets";
+import { Id } from "../../data/model/common";
 import { usePageContext } from "../../data/model/project";
 import AssetCard from "./asset-card";
 
@@ -6,7 +7,7 @@ export default function AssetCardsContainer() {
     const { project, setProject, containerWidth } = usePageContext();
     const cols = Math.floor(containerWidth / 500);
 
-    function updateCallback(id: string) {
+    function updateCallback(id: Id) {
         return (newAsset: AssetData) => {
             project.assets.set(id, newAsset);
             setProject(project);

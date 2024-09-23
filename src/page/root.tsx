@@ -3,7 +3,7 @@ import SideBar from "../component/side-bar";
 import TitleBar from "../component/title-bar";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useRef, useState } from "react";
-import { Project } from "../data/model/project";
+import { deserProject, Project } from "../data/model/project";
 import { invoke } from "@tauri-apps/api/core";
 import { initKeyboardEvent } from "../data/keyboard";
 
@@ -21,15 +21,7 @@ export default function Root() {
 
         if (project == null) {
             invoke("fetch_project")
-                .then((proj) => {
-                    const converted = proj as Project;
-                    setProject({
-                        ...converted,
-                        assets: new Map(Object.entries(converted.assets)),
-                        items: new Map(Object.entries(converted.items)),
-                    });
-
-                })
+                .then((proj) => setProject(deserProject(proj as string)))
                 .catch(() => { });
         }
 

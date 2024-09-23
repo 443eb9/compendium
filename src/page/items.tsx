@@ -1,14 +1,10 @@
-import { useState } from "react";
 import PageTemplate from "../component/common/templates/page-template";
 import { usePageContext } from "../data/model/project";
-import ItemCardsContainer from "../component/items/item-cards-container";
-import ItemSettings from "../component/items/items-settings";
 import { IoAdd } from "react-icons/io5";
 import { generateId } from "../data/model/common";
 import { useNavigate } from "react-router-dom";
 
 export default function ItemsPage() {
-    const [settingsMode, setSettingsMode] = useState(false);
     const context = usePageContext();
     const { project, setProject, containerWidth } = context;
 
@@ -33,6 +29,7 @@ export default function ItemsPage() {
                         id: id,
                         reference: "",
                         name: "",
+                        desc: "",
                         tags: new Set(),
                     }
                 ]
@@ -50,7 +47,7 @@ export default function ItemsPage() {
                 {
                     label: "CreateItem",
                     icon: <IoAdd className="text-2xl" />,
-                    className: settingsMode ? "hidden" : "",
+                    className: "",
                     onClick: createItem,
                 }
             ]}

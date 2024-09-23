@@ -7,7 +7,7 @@ use tauri::{
 
 use crate::{
     err::{
-        Error, ProjectCloseError, ProjectCreationError, ProjectFetchError, ProjectOpenError,
+        Error, ProjectCloseError, ProjectCreationError, ProjectFetchError, ProjectReadError,
         ProjectUpdateError,
     },
     project::{io::PROJECT, model::Project},
@@ -36,7 +36,7 @@ pub fn create_project(
 pub fn open_project(
     path: String,
     project: State<Mutex<Option<Project>>>,
-) -> Result<(), ProjectOpenError> {
+) -> Result<(), Error<ProjectReadError>> {
     *project.lock().unwrap() = Some(io::read_project(path)?);
     Ok(())
 }

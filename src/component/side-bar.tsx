@@ -52,7 +52,7 @@ export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
     const location = useLocation();
 
     return (
-        <div className="flex flex-col min-w-28 pr-2 gap-6 h-full overflow-y-auto">
+        <div className="flex flex-col min-w-28 pr-2 gap-6 h-full overflow-y-auto pb-2">
             {
                 pages.filter((_, i) => projectLoaded || i == 0).map((page, i) =>
                     <SideBarButton

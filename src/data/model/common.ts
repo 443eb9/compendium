@@ -5,18 +5,14 @@ export type Error = {
     content: string,
 }
 
+export type Id = string;
+
 export enum IdType {
     Uuid,
     IncreasingSequence,
 }
 
-export type TagData = {
-    id: string,
-    name: string,
-    color: string,
-}
-
-export function generateId(ty: IdType, nextId: number): { id: string, next: number } {
+export function generateId(ty: IdType, nextId: number): { id: Id, next: number } {
     switch (ty) {
         case IdType.Uuid:
             return { id: v4(), next: nextId };

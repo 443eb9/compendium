@@ -3,7 +3,8 @@ import { initReactI18next } from "react-i18next";
 import { Error } from "../data/model/common";
 
 export function localizeError(err: Error, t: TFunction<"translation", undefined>) {
-    return t(err.ty) + err.content
+    console.log(err)
+    return t(err.ty) + " " + err.content
 }
 
 i18n.use(initReactI18next).init({
@@ -27,6 +28,7 @@ i18n.use(initReactI18next).init({
                 "Name": "Name",
                 "Path": "Path",
                 "Tags": "Tags",
+                "Desc": "Description",
 
                 "ProjectWritingError": "Project writing failed",
 
@@ -80,6 +82,9 @@ i18n.use(initReactI18next).init({
 
                 // Items
                 "CreateItem": "Create Item",
+
+                // Tags
+                "CreateTag": "Create Tag",
             },
         },
     },

@@ -12,6 +12,8 @@ import AssetCardsContainer from "./component/assets/asset-cards-container";
 import AssetsSettings from "./component/assets/assets-settings";
 import ItemCardsContainer from "./component/items/item-cards-container";
 import ItemSettings from "./component/items/items-settings";
+import TagsContainer from "./component/tags/tags-container";
+import TagsSettings from "./component/tags/tags-settings";
 
 export const router = createBrowserRouter([
     {
@@ -70,6 +72,16 @@ export const router = createBrowserRouter([
             {
                 path: "/tags",
                 element: <TagsPage />,
+                children: [
+                    {
+                        path: "",
+                        element: <TagsContainer />,
+                    },
+                    {
+                        path: "settings",
+                        element: <TagsSettings />,
+                    },
+                ]
             },
         ],
     },
