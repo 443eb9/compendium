@@ -1,15 +1,13 @@
-import { useTranslation } from "react-i18next";
 import Button from "../button";
 import Tag from "./tag";
 import { TagData } from "../../../data/model/tags";
+import { t } from "i18next";
 
 export default function TagsDisplay({
     tags, setTags
 }: {
     tags: Set<TagData>, setTags: (tags: TagData[]) => void
 }) {
-    const { t } = useTranslation();
-
     return (
         <div className="">
             <div className="">

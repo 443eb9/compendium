@@ -1,6 +1,6 @@
 import { MouseEventHandler, ReactNode } from "react";
 import LabelledButton from "./labelled-button";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export type Operation = {
     label: string,
@@ -10,8 +10,6 @@ export type Operation = {
 }
 
 export default function OperationBar({ operations }: { operations: Operation[] }) {
-    const { t } = useTranslation();
-
     return (
         <div className="sticky flex gap-2 h-12 py-1 top-0 backdrop-blur-md z-20 shadow-md">
             {

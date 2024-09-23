@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { addKeyboardEvent, removeKeyboardEvent } from "../data/keyboard";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
 import { serProject, usePageContext } from "../data/model/project";
 import { localizeError } from "../data/localization";
+import { t } from "i18next";
 
 export default function ProjectSave() {
     const { project } = usePageContext();
-    const { t } = useTranslation();
 
     useEffect(() => {
         removeKeyboardEvent("s");

@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { AssetData, AssetType, identifyAssetType } from "../../data/model/assets";
 import ListElement from "../common/list-element";
 import { Input } from "../common/input";
@@ -10,13 +9,13 @@ import AssetPreview from "./preview/asset-preview";
 import CardTemplate from "../common/templates/card-template";
 import CardListTemplate from "../common/templates/card-list-template";
 import { useState } from "react";
+import { t } from "i18next";
 
 export default function AssetCard({
     asset, updateCallback
 }: {
     asset: AssetData, updateCallback: (asset: AssetData) => void
 }) {
-    const { t } = useTranslation();
     const [curAsset, setCurAsset] = useState(asset);
     function updateCurAsset(asset: AssetData) {
         setCurAsset(asset);

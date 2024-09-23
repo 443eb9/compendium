@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 import { IdType } from "../../../data/model/common";
 import ListSectionTitle from "../list-section-title";
 import RadioButtonGroup from "../radio-button-group";
@@ -8,8 +8,6 @@ export default function IdSwitching({
 }: {
     ty: IdType, setIdType: (newTy: IdType) => void
 }) {
-    const { t } = useTranslation();
-
     return (
         <div>
             <ListSectionTitle title={t("IdTypeSection")} />

@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { ItemData } from "../../data/model/items";
 import { usePageContext } from "../../data/model/project";
 import AssetPreview from "../assets/preview/asset-preview";
@@ -9,6 +8,7 @@ import { Input } from "../common/input";
 import Button from "../common/button";
 import TagsDisplay from "../common/tagging/tags-display";
 import { useState } from "react";
+import { t } from "i18next";
 
 export default function ItemCard({
     item, updateCallback
@@ -16,7 +16,6 @@ export default function ItemCard({
     item: ItemData, updateCallback: (item: ItemData) => void
 }) {
     const { project } = usePageContext();
-    const { t } = useTranslation();
     const [curItem, setCurItem] = useState(item);
     function updateCurItem(item: ItemData) {
         setCurItem(item);

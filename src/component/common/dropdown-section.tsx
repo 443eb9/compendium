@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import Button from "./button";
+import { t } from "i18next";
 
 export default function DropdownSection({
     className, options, labels, defaultValue, setEditing, onChange
@@ -12,7 +12,6 @@ export default function DropdownSection({
     setEditing?: Dispatch<SetStateAction<boolean>>,
     onChange?: (value: any) => void
 }) {
-    const { t } = useTranslation();
     const [selected, setSelected] = useState(defaultValue);
     const [isExpanded, setExpanded] = useState(false);
 

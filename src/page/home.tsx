@@ -1,12 +1,12 @@
 import { AiOutlineFolderAdd, AiOutlineFolderOpen } from "react-icons/ai";
 import Button from "../component/common/button";
 import { open } from '@tauri-apps/plugin-dialog';
-import { useTranslation } from "react-i18next";
 import "../data/localization";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
 import { deserProject, usePageContext } from "../data/model/project";
 import { localizeError } from "../data/localization";
+import { t } from "i18next";
 
 function createProject(t: any, setProject: any) {
     return async () => {
@@ -64,7 +64,6 @@ function closeProject(t: any, setProject: any) {
 }
 
 export default function HomePage() {
-    const { t } = useTranslation();
     const { project, setProject } = usePageContext();
 
     return (

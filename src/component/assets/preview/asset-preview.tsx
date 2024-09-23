@@ -1,11 +1,9 @@
 import { convertFileSrc } from "@tauri-apps/api/core";
 import { AssetData, AssetType } from "../../../data/model/assets";
 import AssetImgPreview from "./asset-img-preview";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export default function AssetPreview({ asset }: { asset: AssetData | undefined }) {
-    const { t } = useTranslation();
-
     function getPreview(asset: AssetData) {
         if (asset.path == "") {
             return <div className="italic">{t("PreviewNotAvailable")}</div>;
