@@ -8,6 +8,7 @@ import CardTemplate from "../common/templates/card-template";
 import { Input } from "../common/input";
 import Button from "../common/button";
 import TagsDisplay from "../common/tagging/tags-display";
+import { useState } from "react";
 
 export default function ItemCard({
     item, updateCallback
@@ -16,42 +17,47 @@ export default function ItemCard({
 }) {
     const { project } = usePageContext();
     const { t } = useTranslation();
+    const [curItem, setCurItem] = useState(item);
+    function updateCurItem(item: ItemData) {
+        setCurItem(item);
+        updateCallback(item);
+    }
 
     return (
         <CardTemplate>
-            <AssetPreview asset={project.assets.get(item.reference)} />
+            <AssetPreview asset={project.assets.get(curItem.reference)} />
             <CardListTemplate>
                 <ListElement label={t("Id")}>
-                    <Input defaultValue={item.id.toString()} readOnly />
+                    <Input defaultValue={curItem.id.toString()} readOnly />
                 </ListElement>
                 <ListElement label={t("Reference")}>
-                    <Input defaultValue={item.reference.toString()} onChange={(ev) => {
-                        updateCallback({
-                            ...item,
+                    <Input defaultValue={curItem.reference.toString()} onChange={(ev) => {
+                        updateCurItem({
+                            ...curItem,
                             reference: ev.target.value,
                         });
                     }} />
                     <Button className="h-full px-3 ml-2">{t("Browse")}</Button>
                 </ListElement>
                 <ListElement label={t("Name")}>
-                    <Input defaultValue={item.name} onChange={(ev) => {
-                        updateCallback({
-                            ...item,
+                    <Input defaultValue={curItem.name} onChange={(ev) => {
+                        updateCurItem({
+                            ...curItem,
                             name: ev.target.value,
                         })
                     }} />
                 </ListElement>
                 <ListElement label={t("Desc")}>
-                    <Input defaultValue={item.desc} onChange={(ev) => {
-                        updateCallback({
-                            ...item,
+                    <Input defaultValue={curItem.desc} onChange={(ev) => {
+                        updateCurItem({
+                            ...curItem,
                             desc: ev.target.value,
                         })
                     }} />
                 </ListElement>
                 <ListElement label={t("Tags")}>
-                    <TagsDisplay tags={item.tags} setTags={(newTags) => {
-                        const target = project.items.get(item.id);
+                    <TagsDisplay tags={curItem.tags} setTags={(newTags) => {
+                        const target = project.items.get(curItem.id);
                         if (target) {
                             target.tags = new Set(newTags);
                         }

@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { deserProject, Project } from "../data/model/project";
 import { invoke } from "@tauri-apps/api/core";
 import { initKeyboardEvent } from "../data/keyboard";
+import { ErrorBoundary } from "react-error-boundary";
 
 export default function Root() {
     const [project, setProject] = useState<Project | null>(null);
@@ -47,13 +48,15 @@ export default function Root() {
             <TitleBar className="h-8" />
             <div className="flex h-full gap-4 p-2">
                 <SideBar projectLoaded={project != null} />
-                <div className="w-full overflow-y-auto" ref={pageContainer}>
-                    <Outlet context={{
-                        project: project,
-                        setProject: (proj: Project | null) => { console.log(proj); setProject(proj); },
-                        containerWidth: containerWidth,
-                    }} />
-                </div>
+                <ErrorBoundary fallback={<div></div>}>
+                    <div className="w-full overflow-x-hidden overflow-y-auto" ref={pageContainer}>
+                        <Outlet context={{
+                            project: project,
+                            setProject: (proj: Project | null) => { console.log(proj); setProject(proj); },
+                            containerWidth: containerWidth,
+                        }} />
+                    </div>
+                </ErrorBoundary>
             </div>
         </div>
     );

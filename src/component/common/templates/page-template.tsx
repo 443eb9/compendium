@@ -1,7 +1,7 @@
 import { IoClose, IoSettingsOutline } from "react-icons/io5";
 import ProjectSave from "../../project-save";
 import OperationBar, { Operation } from "../operation-bar";
-import { Outlet, useLocation, useNavigate, useNavigation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { usePageContext } from "../../../data/model/project";
 import { useState } from "react";
 

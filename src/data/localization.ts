@@ -27,6 +27,7 @@ i18n.use(initReactI18next).init({
                 "Id": "Id",
                 "Name": "Name",
                 "Path": "Path",
+                "Color": "Color",
                 "Tags": "Tags",
                 "Desc": "Description",
 

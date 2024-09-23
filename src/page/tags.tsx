@@ -2,6 +2,7 @@ import { IoAdd } from "react-icons/io5";
 import PageTemplate from "../component/common/templates/page-template";
 import { usePageContext } from "../data/model/project";
 import { generateId } from "../data/model/common";
+import randomColor from "../data/util";
 
 export default function TagsPage() {
     const { project, setProject } = usePageContext();
@@ -22,7 +23,7 @@ export default function TagsPage() {
                         id: id,
                         name: "",
                         desc: "",
-                        color: "#ffffff",
+                        color: randomColor(),
                     }
                 ]
             ]),
@@ -40,7 +41,7 @@ export default function TagsPage() {
                     label: "CreateTag",
                     className: "",
                     icon: <IoAdd className="text-2xl" />,
-                    onClick: () => createTag,
+                    onClick: createTag,
                 }
             ]}
         />

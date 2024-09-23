@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import AssetPreview from "./preview/asset-preview";
 import CardTemplate from "../common/templates/card-template";
 import CardListTemplate from "../common/templates/card-list-template";
+import { useState } from "react";
 
 export default function AssetCard({
     asset, updateCallback
@@ -16,14 +17,19 @@ export default function AssetCard({
     asset: AssetData, updateCallback: (asset: AssetData) => void
 }) {
     const { t } = useTranslation();
+    const [curAsset, setCurAsset] = useState(asset);
+    function updateCurAsset(asset: AssetData) {
+        setCurAsset(asset);
+        updateCallback(asset);
+    }
 
     return (
         <CardTemplate>
-            <AssetPreview asset={asset} />
+            <AssetPreview asset={curAsset} />
             <CardListTemplate>
                 <ListElement label={t("Type")}>
                     <DropdownSection
-                        defaultValue={asset.ty}
+                        defaultValue={curAsset.ty}
                         labels={[
                             AssetType[AssetType.Image],
                             AssetType[AssetType.Video],
@@ -38,32 +44,32 @@ export default function AssetCard({
                             AssetType.Text,
                             AssetType.Model,
                         ]}
-                        onChange={(ty) => updateCallback({
-                            ...asset,
+                        onChange={(ty) => updateCurAsset({
+                            ...curAsset,
                             ty: ty,
                         })}
                     />
                 </ListElement>
                 <ListElement label={t("Id")}>
-                    <Input defaultValue={asset.id.toString()} onChange={(ev) => {
-                        updateCallback({
-                            ...asset,
+                    <Input defaultValue={curAsset.id.toString()} onChange={(ev) => {
+                        updateCurAsset({
+                            ...curAsset,
                             id: ev.target.value ?? "",
-                        })
+                        });
                     }} readOnly />
                 </ListElement>
                 <ListElement label={t("Name")}>
-                    <Input defaultValue={asset.name} onChange={(ev) => {
-                        updateCallback({
-                            ...asset,
+                    <Input defaultValue={curAsset.name} onChange={(ev) => {
+                        updateCurAsset({
+                            ...curAsset,
                             name: ev.currentTarget.value ?? "",
                         });
                     }} />
                 </ListElement>
                 <ListElement label={t("Path")}>
-                    <Input defaultValue={asset.path} onChange={(ev) => {
-                        updateCallback({
-                            ...asset,
+                    <Input defaultValue={curAsset.path} onChange={(ev) => {
+                        updateCurAsset({
+                            ...curAsset,
                             path: ev.currentTarget.value ?? "",
                         });
                     }} readOnly />
@@ -75,13 +81,13 @@ export default function AssetCard({
                                 const ty = identifyAssetType(file);
                                 if (ty == undefined) {
                                     toast.error(t("UnrecognizedFileType"));
-                                    updateCallback({
-                                        ...asset,
+                                    updateCurAsset({
+                                        ...curAsset,
                                         path: file,
                                     });
                                 } else {
-                                    updateCallback({
-                                        ...asset,
+                                    updateCurAsset({
+                                        ...curAsset,
                                         path: file,
                                         ty: ty,
                                     });

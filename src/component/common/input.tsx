@@ -1,13 +1,15 @@
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, CSSProperties, MouseEventHandler } from "react";
 
 export function Input({
-    className, placeholder, defaultValue, onChange, readOnly
+    className, placeholder, defaultValue, onChange, onClick, readOnly, style
 }: {
     className?: string,
     placeholder?: string,
     defaultValue?: string,
     onChange?: ChangeEventHandler<HTMLInputElement>,
-    readOnly?: boolean
+    onClick?: MouseEventHandler<HTMLInputElement>,
+    readOnly?: boolean,
+    style?: CSSProperties
 }) {
     return (
         <input
@@ -18,6 +20,8 @@ export function Input({
             defaultValue={defaultValue}
             onChange={onChange}
             readOnly={readOnly}
+            onClick={onClick}
+            style={style}
         />
     );
 }
