@@ -2,7 +2,7 @@ import { IoAdd } from "react-icons/io5";
 import { useState } from "react";
 import { AssetType } from "../data/model/assets";
 import AssetCardsContainer from "../component/assets/asset-cards-container";
-import AssetSettings from "../component/assets/asset-settings";
+import AssetsSettings from "../component/assets/assets-settings";
 import { usePageContext } from "../data/model/project";
 import { useNavigate } from "react-router-dom";
 import { generateId } from "../data/model/common";
@@ -11,36 +11,38 @@ import PageTemplate from "../component/common/page-template";
 export default function AssetsPage() {
     const [settingsMode, setSettingsMode] = useState(false);
     const context = usePageContext();
-    const { project, setProject, containerWidth } = context;
-    const cols = Math.floor(containerWidth / 500);
+    const { project, setProject } = context;
 
     if (project == null) {
         useNavigate()("/");
         return;
     }
 
-    function updateAssets() {
+    function createAsset() {
         const { id, next } = generateId(
-            project.assetSettings.idType,
-            project.assetSettings.nextId,
+            project.assetsSettings.idType,
+            project.assetsSettings.nextId,
         );
-
-        setProject({
+        const newProject = {
             ...project,
-            assets: [
+            assets: new Map([
                 ...project.assets,
-                {
-                    ty: AssetType.Image,
-                    id: id,
-                    name: "",
-                    path: ""
-                }
-            ],
-            assetSettings: {
-                ...project.assetSettings,
+                [
+                    id,
+                    {
+                        ty: AssetType.Image,
+                        id: id,
+                        name: "",
+                        path: "",
+                    }
+                ]
+            ]),
+            assetsSettings: {
+                ...project.assetsSettings,
                 nextId: next,
             }
-        });
+        };
+        setProject(newProject);
     }
 
     return (
@@ -48,27 +50,18 @@ export default function AssetsPage() {
             settingsMode={settingsMode}
             setSettingsMode={setSettingsMode}
             settings={
-                <AssetSettings
-                    settings={project.assetSettings}
-                    setSettings={
-                        (s) => setProject({ ...project, assetSettings: s })
-                    }
+                <AssetsSettings
+                    settings={project.assetsSettings}
+                    setSettings={(s) => setProject({ ...project, assetsSettings: s })}
                 />
             }
-            page={
-                <AssetCardsContainer
-                    className="w-full h-full"
-                    assets={project.assets}
-                    context={context}
-                    cols={cols}
-                />
-            }
+            page={<AssetCardsContainer context={context} />}
             extraOperations={[
                 {
                     label: "CreateAsset",
                     icon: <IoAdd className="text-2xl" />,
                     className: settingsMode ? "hidden" : "",
-                    onClick: updateAssets,
+                    onClick: createAsset,
                 }
             ]}
         />

@@ -1,12 +1,15 @@
 import { useOutletContext } from "react-router-dom";
 import { Asset, AssetSettingsData } from "./assets";
 import { Dispatch, SetStateAction } from "react";
+import { Item, ItemsSettingsData } from "./items";
 
 export type Project = {
     path: string,
     name: string,
-    assets: Asset[],
-    assetSettings: AssetSettingsData,
+    assets: Map<string, Asset>,
+    assetsSettings: AssetSettingsData,
+    items: Map<string, Item>,
+    itemsSettings: ItemsSettingsData,
 }
 
 export type PageContext = {

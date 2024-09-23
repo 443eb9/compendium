@@ -3,36 +3,29 @@ import { PageContext } from "../../data/model/project";
 import AssetCard from "./asset-card";
 
 export default function AssetCardsContainer({
-    className, assets, context, cols
+    className, context
 }: {
-    className?: string, assets: Asset[], context: PageContext, cols: number
+    className?: string, context: PageContext
 }) {
-    function updateCallback(index: number) {
+    const { project, setProject, containerWidth } = context;
+    const cols = Math.floor(containerWidth / 500);
+
+    function updateCallback(id: string) {
         return (newAsset: Asset) => {
-            let { project, setProject } = context;
-            project.assets[index] = newAsset;
+            project.assets.set(id, newAsset);
             setProject(project);
         };
     }
 
     return (
-        <div className={`grid gap-2 ${className}`} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+        <div
+            className={`w-full h-full grid gap-2 ${className}`}
+            style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+        >
             {
-                assets
-                    .map((asset, i) => {
-                        return {
-                            asset: asset,
-                            index: i,
-                        };
-                    })
-                    .reverse()
-                    .map((packed) =>
-                        <AssetCard
-                            key={packed.index}
-                            asset={packed.asset}
-                            updateCallback={updateCallback(packed.index)}
-                        />
-                    )
+                [...project.assets.values()].map((asset, i) =>
+                    <AssetCard key={i} asset={asset} updateCallback={updateCallback(asset.id)} />
+                )
             }
         </div>
     );

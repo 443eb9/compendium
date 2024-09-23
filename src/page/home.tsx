@@ -6,6 +6,7 @@ import "../data/localization";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
 import { Project, usePageContext } from "../data/model/project";
+import { localizeError } from "../data/localization";
 
 function createProject(t: any, setProject: any) {
     return async () => {
@@ -23,9 +24,9 @@ function createProject(t: any, setProject: any) {
                 toast.success(t("ProjectCreateSuccess"));
                 invoke("fetch_project")
                     .then((project) => setProject(project as Project))
-                    .catch((err) => toast.error(t(err)));
+                    .catch((err) => toast.error(localizeError(err, t)));
             })
-            .catch((err) => toast.error(t(err)));
+            .catch((err) => toast.error(localizeError(err, t)));
     };
 }
 
@@ -45,9 +46,9 @@ function openProject(t: any, setProject: any) {
                 toast.success(t("ProjectOpenSuccess"));
                 invoke("fetch_project")
                     .then((project) => setProject(project as Project))
-                    .catch((err) => toast.error(t(err)));
+                    .catch((err) => toast.error(localizeError(err, t)));
             })
-            .catch((err) => toast.error(t(err)));
+            .catch((err) => toast.error(localizeError(err, t)));
     };
 }
 
@@ -58,7 +59,7 @@ function closeProject(t: any, setProject: any) {
                 setProject(null);
                 toast.success(t("ProjectCloseSuccess"));
             })
-            .catch((err) => toast.error(t(err)));
+            .catch((err) => toast.error(localizeError(err, t)));
     }
 }
 

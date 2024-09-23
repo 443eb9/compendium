@@ -1,5 +1,10 @@
-import i18n from "i18next";
+import i18n, { TFunction } from "i18next";
 import { initReactI18next } from "react-i18next";
+import { Error } from "../data/model/common";
+
+export function localizeError(err: Error, t: TFunction<"translation", undefined>) {
+    return t(err.ty) + err.content
+}
 
 i18n.use(initReactI18next).init({
     debug: true,
@@ -14,6 +19,8 @@ i18n.use(initReactI18next).init({
                 "SettingsSaveSuccess": "Successfully saved settings!",
                 "Save": "Save",
                 "Generate": "Generate",
+
+                "ProjectWritingError": "Project writing failed",
 
                 // Enums
                 "Uuid": "UUID",
@@ -45,6 +52,7 @@ i18n.use(initReactI18next).init({
                 "CloseProject": "Close Project",
                 "ProjectCreateSuccess": "Successfully created project!",
                 "ProjectCloseSuccess": "Successfully closed project.",
+                "ProjectCloseErrorProjectUninitialized": "Project close failed: Project uninitialized.",
                 "ProjectCreateFailAlreadyExists": "Project creation failed: A project already exists in the folder.",
                 "ProjectCreateFailRootFolder": "Project creation failed: Folder is root of a driver.",
                 "ProjectFetchErrorProjectUninitialized": "Project fetch failed: Project not initialized.",
@@ -65,7 +73,10 @@ i18n.use(initReactI18next).init({
                 "PreviewNotAvailable": "No asset is chosen. Preview is not available.",
                 "IdTypeSection": "ID Type",
                 "NextId": "Next ID",
-                "UnrecognizedFileType": "Failed to recognize type of this file. Are you sure this is a valid asset?"
+                "UnrecognizedFileType": "Failed to recognize type of this file. Are you sure this is a valid asset?",
+
+                // Items
+                "CreateItem": "Create Item",
             },
         },
     },

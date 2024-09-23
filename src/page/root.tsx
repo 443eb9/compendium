@@ -20,9 +20,16 @@ export default function Root() {
 
         if (project == null) {
             invoke("fetch_project")
-                .then((project) => setProject(project as Project))
+                .then((proj) => {
+                    const converted = proj as Project;
+                    setProject({
+                        ...converted,
+                        assets: new Map(Object.entries(converted.assets)),
+                        items: new Map(Object.entries(converted.items)),
+                    });
+
+                })
                 .catch(() => { });
-            console.log(project)
         }
 
         setMounted(true);
@@ -49,7 +56,7 @@ export default function Root() {
                 <div className="w-full overflow-y-auto" ref={pageContainer}>
                     <Outlet context={{
                         project: project,
-                        setProject: setProject,
+                        setProject: (proj: Project | null) => { console.log(proj); setProject(proj); },
                         containerWidth: containerWidth,
                     }} />
                 </div>

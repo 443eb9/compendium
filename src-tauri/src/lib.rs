@@ -4,6 +4,7 @@ use tauri::Manager;
 
 use crate::project::model::Project;
 
+mod err;
 mod project;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]

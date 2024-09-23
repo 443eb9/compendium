@@ -15,8 +15,9 @@ export default function OperationBar({ operations }: { operations: Operation[] }
     return (
         <div className="sticky flex gap-2 h-12 py-1 top-0 backdrop-blur-md z-20 shadow-md">
             {
-                operations.map((op) =>
+                operations.map((op, i) =>
                     <LabelledButton
+                        key={i}
                         label={t(op.label)}
                         className={op.className}
                         onClick={op.onClick}
