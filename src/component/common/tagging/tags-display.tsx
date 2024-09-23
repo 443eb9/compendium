@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { TagData } from "../../../data/model/common";
 import Button from "../button";
 import Tag from "./tag";
+import { TagData } from "../../../data/model/tags";
 
 export default function TagsDisplay({
     tags, setTags

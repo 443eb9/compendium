@@ -1,6 +1,7 @@
 import { Id } from "../../data/model/common";
 import { ItemData } from "../../data/model/items";
 import { usePageContext } from "../../data/model/project";
+import ContainerTemplate from "../common/templates/container-template";
 import ItemCard from "./item-card";
 
 export default function ItemCardsContainer() {
@@ -14,12 +15,12 @@ export default function ItemCardsContainer() {
     }
 
     return (
-        <div className="">
+        <ContainerTemplate>
             {
                 [...project.items.values()].map((item, i) =>
                     <ItemCard key={i} item={item} updateCallback={updateCallback(item.id)} />
                 )
             }
-        </div>
+        </ContainerTemplate>
     );
 }

@@ -18,6 +18,11 @@ export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
             name: "AssetsButton"
         },
         {
+            to: "/tags",
+            icon: <IoPricetag />,
+            name: "Tags",
+        },
+        {
             to: "/items",
             icon: <GrCubes />,
             name: "ItemsButton"
@@ -42,11 +47,6 @@ export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
             icon: <IoEarthOutline />,
             name: "TerrainButton"
         },
-        {
-            to: "/tags",
-            icon: <IoPricetag />,
-            name: "Tags",
-        }
     ];
 
     const location = useLocation();

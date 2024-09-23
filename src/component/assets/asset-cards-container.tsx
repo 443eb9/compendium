@@ -1,11 +1,11 @@
 import { AssetData } from "../../data/model/assets";
 import { Id } from "../../data/model/common";
 import { usePageContext } from "../../data/model/project";
+import ContainerTemplate from "../common/templates/container-template";
 import AssetCard from "./asset-card";
 
 export default function AssetCardsContainer() {
-    const { project, setProject, containerWidth } = usePageContext();
-    const cols = Math.floor(containerWidth / 500);
+    const { project, setProject } = usePageContext();
 
     function updateCallback(id: Id) {
         return (newAsset: AssetData) => {
@@ -15,15 +15,12 @@ export default function AssetCardsContainer() {
     }
 
     return (
-        <div
-            className="w-full h-full grid gap-2"
-            style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
-        >
+        <ContainerTemplate>
             {
                 [...project.assets.values()].map((asset, i) =>
                     <AssetCard key={i} asset={asset} updateCallback={updateCallback(asset.id)} />
                 )
             }
-        </div>
+        </ContainerTemplate>
     );
 }
