@@ -43,7 +43,7 @@ export default function ItemCard({
                         updateCurItem({
                             ...curItem,
                             name: ev.target.value,
-                        })
+                        });
                     }} />
                 </ListElement>
                 <ListElement label={t("Desc")}>
@@ -51,14 +51,14 @@ export default function ItemCard({
                         updateCurItem({
                             ...curItem,
                             desc: ev.target.value,
-                        })
+                        });
                     }} />
                 </ListElement>
-                <ListElement label={t("Tags")}>
+                <ListElement className="h-auto" label={t("Tags")}>
                     <TagsDisplay tags={curItem.tags} setTags={(newTags) => {
                         const target = project.items.get(curItem.id);
                         if (target) {
-                            target.tags = new Set(newTags);
+                            target.tags = newTags;
                         }
                     }} />
                 </ListElement>

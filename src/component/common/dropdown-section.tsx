@@ -43,7 +43,7 @@ export default function DropdownSection({
             </div>
             <div
                 className={
-                    `absolute flex top-9 flex-col z-10 overflow-hidden w-full transition-all bg-darker border-x-2 border-b-2 border-outline
+                    `absolute flex top-9 flex-col z-10 max-h-48 overflow-y-auto w-full transition-all bg-darker border-x-2 border-b-2 border-outline
                     ${isExpanded ? "scale-y-100" : "scale-y-0"}`
                 }
                 style={{

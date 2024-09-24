@@ -1,10 +1,10 @@
 import clsx from "clsx";
-import { MouseEventHandler, ReactNode } from "react";
+import { CSSProperties, MouseEventHandler, ReactNode } from "react";
 
 export default function Button({
-    children, className, noOutline, onClick
+    children, className, noOutline, onClick, style
 }: {
-    children?: ReactNode, className?: string, noOutline?: boolean, onClick?: MouseEventHandler<HTMLButtonElement>
+    children?: ReactNode, className?: string, noOutline?: boolean, onClick?: MouseEventHandler<HTMLButtonElement>, style?: CSSProperties
 }) {
     return (
         <button
@@ -13,6 +13,7 @@ export default function Button({
                 { "border-2": !noOutline }
             )}
             onClick={onClick}
+            style={style}
         >
             {children}
         </button>

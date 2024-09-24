@@ -30,6 +30,7 @@ i18n.use(initReactI18next).init({
                 "Color": "Color",
                 "Tags": "Tags",
                 "Desc": "Description",
+                "Unnamed": "Unnamed",
 
                 "ProjectWritingError": "Project writing failed",
 
