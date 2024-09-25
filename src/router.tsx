@@ -14,6 +14,7 @@ import ItemCardsContainer from "./component/items/item-cards-container";
 import ItemSettings from "./component/items/items-settings";
 import TagsContainer from "./component/tags/tags-container";
 import TagsSettings from "./component/tags/tags-settings";
+import TreePage from "./page/tree";
 
 export const router = createBrowserRouter([
     {
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
                     },
                 ]
             },
+            {
+                path: "/tree",
+                element: <TreePage />,
+            }
         ],
     },
 ]);

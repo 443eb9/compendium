@@ -54,6 +54,7 @@ i18n.use(initReactI18next).init({
                 "StructuresButton": "Structures",
                 "TerrainButton": "Terrain",
                 "AssetsButton": "Assets",
+                "TreeButton": "Tree",
 
                 "ProjectUpdateSuccess": "Successfully updated project!",
                 "ProjectUpdateErrorProjectUninitialized": "Project update failed: Project uninitialized.",

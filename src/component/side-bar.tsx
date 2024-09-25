@@ -4,6 +4,7 @@ import { RiRobot2Line } from "react-icons/ri";
 import { IoCubeOutline, IoEarthOutline, IoPricetag } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { MdWallpaper } from "react-icons/md";
+import { PiTreeStructure } from "react-icons/pi";
 
 export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
     const pages = [
@@ -46,6 +47,11 @@ export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
             to: "/terrain",
             icon: <IoEarthOutline />,
             name: "TerrainButton"
+        },
+        {
+            to: "/tree",
+            icon: <PiTreeStructure />,
+            name: "TreeButton",
         },
     ];
 
