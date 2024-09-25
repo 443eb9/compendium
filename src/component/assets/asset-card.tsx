@@ -50,7 +50,7 @@ export default function AssetCard({
                     />
                 </ListElement>
                 <ListElement label={t("Id")}>
-                    <Input defaultValue={curAsset.id.toString()} onChange={(ev) => {
+                    <Input value={curAsset.id.toString()} onChange={(ev) => {
                         updateCurAsset({
                             ...curAsset,
                             id: ev.target.value ?? "",
@@ -58,7 +58,7 @@ export default function AssetCard({
                     }} readOnly />
                 </ListElement>
                 <ListElement label={t("Name")}>
-                    <Input defaultValue={curAsset.name} onChange={(ev) => {
+                    <Input value={curAsset.name} onChange={(ev) => {
                         updateCurAsset({
                             ...curAsset,
                             name: ev.currentTarget.value ?? "",
@@ -66,7 +66,7 @@ export default function AssetCard({
                     }} />
                 </ListElement>
                 <ListElement label={t("Path")}>
-                    <Input defaultValue={curAsset.path} onChange={(ev) => {
+                    <Input value={curAsset.path} onChange={(ev) => {
                         updateCurAsset({
                             ...curAsset,
                             path: ev.currentTarget.value ?? "",

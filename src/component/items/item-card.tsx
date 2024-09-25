@@ -9,17 +9,24 @@ import Button from "../common/button";
 import TagsDisplay from "../common/tagging/tags-display";
 import { useState } from "react";
 import { t } from "i18next";
+import { Id } from "../../data/model/common";
 
 export default function ItemCard({
-    item, updateCallback
+    item, browsing, setBrowsing
 }: {
-    item: ItemData, updateCallback: (item: ItemData) => void
+    item: ItemData,
+    browsing: Id | null,
+    setBrowsing: (id: Id | null) => void
 }) {
-    const { project } = usePageContext();
-    const [curItem, setCurItem] = useState(item);
+    const { project, setProject } = usePageContext();
+    const curItem = project.items.get(item.id);
+    if (!curItem) return "";
+
+    const [_, setRefresh] = useState(0);
     function updateCurItem(item: ItemData) {
-        setCurItem(item);
-        updateCallback(item);
+        project.items.set(item.id, item);
+        setProject(project);
+        setRefresh(r => r++);
     }
 
     return (
@@ -27,19 +34,23 @@ export default function ItemCard({
             <AssetPreview asset={project.assets.get(curItem.reference)} />
             <CardListTemplate>
                 <ListElement label={t("Id")}>
-                    <Input defaultValue={curItem.id.toString()} readOnly />
+                    <Input value={curItem.id.toString()} readOnly />
                 </ListElement>
                 <ListElement label={t("Reference")}>
-                    <Input defaultValue={curItem.reference.toString()} onChange={(ev) => {
+                    <Input value={curItem.reference.toString()} onChange={(ev) => {
                         updateCurItem({
                             ...curItem,
                             reference: ev.target.value,
                         });
                     }} />
-                    <Button className="h-full px-3 ml-2">{t("Browse")}</Button>
+                    <Button className="h-full w-24 ml-2" onClick={() => {
+                        setBrowsing(browsing != null && browsing == item.id ? null : item.id);
+                    }}>
+                        {t(browsing == item.id ? "Close" : "Browse")}
+                    </Button>
                 </ListElement>
                 <ListElement label={t("Name")}>
-                    <Input defaultValue={curItem.name} onChange={(ev) => {
+                    <Input value={curItem.name} onChange={(ev) => {
                         updateCurItem({
                             ...curItem,
                             name: ev.target.value,
@@ -47,7 +58,7 @@ export default function ItemCard({
                     }} />
                 </ListElement>
                 <ListElement label={t("Desc")}>
-                    <Input defaultValue={curItem.desc} onChange={(ev) => {
+                    <Input value={curItem.desc} onChange={(ev) => {
                         updateCurItem({
                             ...curItem,
                             desc: ev.target.value,

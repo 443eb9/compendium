@@ -31,6 +31,8 @@ i18n.use(initReactI18next).init({
                 "Tags": "Tags",
                 "Desc": "Description",
                 "Unnamed": "Unnamed",
+                "Search": "Search",
+                "Close": "Close",
 
                 "ProjectWritingError": "Project writing failed",
 
@@ -83,6 +85,7 @@ i18n.use(initReactI18next).init({
                 "UnrecognizedFileType": "Failed to recognize type of this file. Are you sure this is a valid asset?",
 
                 // Items
+                "SelectAsset": "Select Asset",
                 "CreateItem": "Create Item",
 
                 // Tags

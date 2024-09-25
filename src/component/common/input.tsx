@@ -1,11 +1,11 @@
 import { ChangeEventHandler, CSSProperties, MouseEventHandler } from "react";
 
 export function Input({
-    className, placeholder, defaultValue, onChange, onClick, readOnly, style
+    className, placeholder, value, onChange, onClick, readOnly, style
 }: {
     className?: string,
     placeholder?: string,
-    defaultValue?: string,
+    value?: string,
     onChange?: ChangeEventHandler<HTMLInputElement>,
     onClick?: MouseEventHandler<HTMLInputElement>,
     readOnly?: boolean,
@@ -17,7 +17,7 @@ export function Input({
                 ${readOnly ? "cursor-default" : "hover:border-outline focus:border-outline"}
                 ${className}`}
             placeholder={placeholder}
-            defaultValue={defaultValue}
+            value={value}
             onChange={onChange}
             readOnly={readOnly}
             onClick={onClick}

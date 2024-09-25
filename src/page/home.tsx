@@ -8,8 +8,10 @@ import { deserProject, usePageContext } from "../data/model/project";
 import { localizeError } from "../data/localization";
 import { t } from "i18next";
 
-function createProject(t: any, setProject: any) {
-    return async () => {
+export default function HomePage() {
+    const { project, setProject } = usePageContext();
+
+    async function createProject() {
         const file = await open({
             title: "Select project root",
             directory: true,
@@ -27,11 +29,9 @@ function createProject(t: any, setProject: any) {
                     .catch((err) => toast.error(t(err)));
             })
             .catch((err) => toast.error(localizeError(err, t)));
-    };
-}
+    }
 
-function openProject(t: any, setProject: any) {
-    return async () => {
+    async function openProject() {
         const file = await open({
             title: "Select project root",
             directory: true,
@@ -49,11 +49,9 @@ function openProject(t: any, setProject: any) {
                     .catch((err) => toast.error(t(err)));
             })
             .catch((err) => toast.error(localizeError(err, t)));
-    };
-}
+    }
 
-function closeProject(t: any, setProject: any) {
-    return async () => {
+    function closeProject() {
         invoke("close_project")
             .then(() => {
                 setProject(null);
@@ -61,10 +59,6 @@ function closeProject(t: any, setProject: any) {
             })
             .catch((err) => toast.error(localizeError(err, t)));
     }
-}
-
-export default function HomePage() {
-    const { project, setProject } = usePageContext();
 
     return (
         <div className="flex flex-col w-full p-5 gap-8">
@@ -79,17 +73,17 @@ export default function HomePage() {
                     ? <div className="flex flex-col gap-1 text-lg font-bold">
                         <div className="italic">{project.name}</div>
                         <div className="italic">At {project.path}</div>
-                        <Button className="flex items-center gap-2 p-1 pl-2 w-48" onClick={closeProject(t, setProject)}>
+                        <Button className="flex items-center gap-2 p-1 pl-2 w-48" onClick={closeProject}>
                             <AiOutlineFolderAdd />
                             <h3>{t("CloseProject")}</h3>
                         </Button>
                     </div>
                     : <div className="flex flex-col w-48 gap-2 text-lg">
-                        <Button className="flex items-center gap-2 p-1 pl-2" onClick={openProject(t, setProject)}>
+                        <Button className="flex items-center gap-2 p-1 pl-2" onClick={openProject}>
                             <AiOutlineFolderOpen />
                             <h3>{t("OpenProject")}</h3>
                         </Button>
-                        <Button className="flex items-center gap-2 p-1 pl-2" onClick={createProject(t, setProject)}>
+                        <Button className="flex items-center gap-2 p-1 pl-2" onClick={createProject}>
                             <AiOutlineFolderAdd />
                             <h3>{t("CreateProject")}</h3>
                         </Button>

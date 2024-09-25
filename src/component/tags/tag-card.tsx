@@ -4,31 +4,32 @@ import { Input } from "../common/input";
 import ListElement from "../common/list-element";
 import CardListTemplate from "../common/templates/card-list-template";
 import CardTemplate from "../common/templates/card-template";
-import { HexColorPicker } from "react-colorful";
-import { useState } from "react";
+import { usePageContext } from "../../data/model/project";
+import { Id } from "../../data/model/common";
 
 export default function TagCard({
-    tag, updateCallback
+    id, picking, setPicking
 }: {
-    tag: TagData, updateCallback: (tag: TagData) => void
+    id: Id, picking: TagData | null, setPicking: (tag: TagData | null) => void
 }) {
-    const [isPickingColor, setPickingColor] = useState(false);
-    const [curTag, setCurTag] = useState(tag);
+    const { project } = usePageContext();
+    const tag = project.tags.get(id);
+    if (!tag) { return; }
+
     function updateCurTag(tag: TagData) {
-        setCurTag(tag);
-        updateCallback(tag);
+        project.tags.set(tag.id, tag);
     }
 
     return (
         <CardTemplate>
             <CardListTemplate>
                 <ListElement label={t("Id")}>
-                    <Input defaultValue={curTag.id.toString()} readOnly />
+                    <Input value={tag.id.toString()} readOnly />
                 </ListElement>
                 <ListElement label={t("Name")}>
-                    <Input defaultValue={curTag.name} onChange={(ev) => {
+                    <Input value={tag.name} onChange={(ev) => {
                         updateCurTag({
-                            ...curTag,
+                            ...tag,
                             name: ev.target.value ?? "",
                         });
                     }} />
@@ -36,30 +37,19 @@ export default function TagCard({
                 <ListElement className="relative" label={t("Color")}>
                     <Input
                         className="hover:border-outline"
-                        readOnly
-                        onClick={() => { setPickingColor(!isPickingColor) }}
-                        style={{
-                            backgroundColor: curTag.color,
+                        value={(() => { console.log(tag.color); return tag.color; })()}
+                        onClick={() => {
+                            if (!picking || picking != tag) {
+                                setPicking(tag);
+                            } else if (picking == tag) {
+                                setPicking(null);
+                            }
                         }}
+                        style={{
+                            backgroundColor: tag.color,
+                        }}
+                        readOnly
                     />
-                    {
-                        isPickingColor &&
-                        <HexColorPicker
-                            style={{
-                                position: "absolute",
-                                left: "112px",
-                                top: "44px",
-                                zIndex: "100",
-                            }}
-                            color={curTag.color}
-                            onChange={(newColor) => {
-                                updateCurTag({
-                                    ...curTag,
-                                    color: newColor,
-                                });
-                            }}
-                        />
-                    }
                 </ListElement>
             </CardListTemplate>
         </CardTemplate>

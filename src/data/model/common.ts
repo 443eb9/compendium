@@ -1,4 +1,6 @@
 import { v4 } from "uuid";
+import { AssetData } from "./assets";
+import { ItemData } from "./items";
 
 export type Error = {
     ty: string,
@@ -6,6 +8,7 @@ export type Error = {
 }
 
 export type Id = string;
+export type Referenceable = AssetData | ItemData;
 
 export enum IdType {
     Uuid,
