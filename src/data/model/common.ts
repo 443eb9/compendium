@@ -15,6 +15,13 @@ export enum IdType {
     IncreasingSequence,
 }
 
+export enum ReferenceType {
+    Asset,
+    Item,
+    Structure,
+    // TODO property
+}
+
 export function generateId(ty: IdType, nextId: number): { id: Id, next: number } {
     switch (ty) {
         case IdType.Uuid:

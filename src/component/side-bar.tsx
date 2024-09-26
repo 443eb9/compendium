@@ -29,9 +29,9 @@ export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
             name: "ItemsButton"
         },
         {
-            to: "/story",
+            to: "/stories",
             icon: <GrBook />,
-            name: "StoryButton"
+            name: "StoriesButton"
         },
         {
             to: "/character",

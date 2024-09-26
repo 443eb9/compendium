@@ -16,15 +16,15 @@ export default function ItemCardsContainer() {
                 [...project.items.values()].map((item, i) =>
                     <ItemCard
                         key={i}
-                        item={item}
+                        id={item.id}
                         browsing={browsing}
                         setBrowsing={setBrowsing}
                     />
                 )
             }
             <BrowsingPanel
-                options={project.assets}
-                opened={browsing != null}
+                title="SelectAsset"
+                options={browsing ? project.assets : null}
                 setter={(op) => {
                     const item = project.items.get(browsing as Id) as ItemData;
                     item.reference = op;

@@ -4,8 +4,8 @@ import AssetImgPreview from "./asset-img-preview";
 import { t } from "i18next";
 
 export default function AssetPreview({ asset }: { asset: AssetData | undefined }) {
-    function getPreview(asset: AssetData) {
-        if (asset.path == "") {
+    function getPreview(asset: AssetData | undefined) {
+        if (!asset || asset.path == "") {
             return <div className="italic">{t("PreviewNotAvailable")}</div>;
         }
 
@@ -17,7 +17,7 @@ export default function AssetPreview({ asset }: { asset: AssetData | undefined }
                 return <div className="italic">{t("PreviewNotSupport")}</div>
         }
     }
-    const preview = asset == undefined ? <div className=""></div> : getPreview(asset);
+    const preview = getPreview(asset);
 
     return (
         <div className="w-full max-w-[360px]">

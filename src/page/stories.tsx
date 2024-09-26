@@ -1,11 +1,10 @@
-import { IoAdd } from "react-icons/io5";
-import { AssetType } from "../data/model/assets";
-import { usePageContext } from "../data/model/project";
 import { useNavigate } from "react-router-dom";
-import { generateId } from "../data/model/common";
 import PageTemplate from "../component/common/templates/page-template";
+import { generateId, ReferenceType } from "../data/model/common";
+import { usePageContext } from "../data/model/project";
+import { IoAdd } from "react-icons/io5";
 
-export default function AssetsPage() {
+export default function StoriesPage() {
     const context = usePageContext();
     const { project, setProject } = context;
 
@@ -14,30 +13,34 @@ export default function AssetsPage() {
         return;
     }
 
-    function createAsset() {
+    function createStory() {
         const { id, next } = generateId(
-            project.assetsSettings.idType,
-            project.assetsSettings.nextId,
+            project.storySettings.idType,
+            project.storySettings.nextId,
         );
+
+        console.log(project);
+        console.log(id);
 
         setProject({
             ...project,
-            assets: new Map([
-                ...project.assets,
+            stories: new Map([
+                ...project.stories,
                 [
                     id,
                     {
                         id: id,
-                        ty: AssetType.Image,
-                        name: "",
-                        path: "",
+                        reference: "",
+                        refType: ReferenceType.Asset,
+                        title: "",
+                        body: "",
                     }
                 ]
             ]),
-            assetsSettings: {
-                ...project.assetsSettings,
+            storySettings: {
+                ...project.storySettings,
                 nextId: next,
-            }
+            },
         });
     }
 
@@ -45,10 +48,10 @@ export default function AssetsPage() {
         <PageTemplate
             extraOperations={[
                 {
-                    label: "CreateAsset",
+                    label: "CreateStory",
                     icon: <IoAdd className="text-2xl" />,
                     className: "",
-                    onClick: createAsset,
+                    onClick: createStory,
                 }
             ]}
         />

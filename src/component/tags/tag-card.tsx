@@ -6,6 +6,7 @@ import CardListTemplate from "../common/templates/card-list-template";
 import CardTemplate from "../common/templates/card-template";
 import { usePageContext } from "../../data/model/project";
 import { Id } from "../../data/model/common";
+import { useRefresher } from "../../data/util";
 
 export default function TagCard({
     id, picking, setPicking
@@ -13,12 +14,8 @@ export default function TagCard({
     id: Id, picking: TagData | null, setPicking: (tag: TagData | null) => void
 }) {
     const { project } = usePageContext();
-    const tag = project.tags.get(id);
-    if (!tag) { return; }
-
-    function updateCurTag(tag: TagData) {
-        project.tags.set(tag.id, tag);
-    }
+    const tag = project.tags.get(id) as TagData;
+    const update = useRefresher();
 
     return (
         <CardTemplate>
@@ -28,16 +25,14 @@ export default function TagCard({
                 </ListElement>
                 <ListElement label={t("Name")}>
                     <Input value={tag.name} onChange={(ev) => {
-                        updateCurTag({
-                            ...tag,
-                            name: ev.target.value ?? "",
-                        });
+                        tag.name = ev.target.value;
+                        update();
                     }} />
                 </ListElement>
                 <ListElement className="relative" label={t("Color")}>
                     <Input
                         className="hover:border-outline"
-                        value={(() => { console.log(tag.color); return tag.color; })()}
+                        value={tag.color}
                         onClick={() => {
                             if (!picking || picking != tag) {
                                 setPicking(tag);

@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import { ItemData, ItemsSettingsData } from "./items";
 import { TagData, TagsSettingsData } from "./tags";
 import { Id } from "./common";
+import { StoryData, StorySettingsData } from "./story";
 
 export type Project = {
     path: string,
@@ -14,6 +15,8 @@ export type Project = {
     assetsSettings: AssetSettingsData,
     items: Map<Id, ItemData>,
     itemsSettings: ItemsSettingsData,
+    stories: Map<Id, StoryData>,
+    storySettings: StorySettingsData,
 }
 
 export type PageContext = {
@@ -43,6 +46,8 @@ export function serProject(project: Project) {
     p.items = Object.fromEntries(p.items);
     // @ts-ignore
     p.tags = Object.fromEntries(p.tags);
+    // @ts-ignore
+    p.stories = Object.fromEntries(p.stories);
     return JSON.stringify(p);
 }
 
@@ -55,5 +60,6 @@ export function deserProject(project: string) {
     p.items.forEach((i) => {
         i.tags = new Set([...i.tags.values()]);
     });
+    p.stories = new Map(Object.entries(p.stories));
     return p;
 }

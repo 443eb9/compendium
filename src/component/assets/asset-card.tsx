@@ -8,27 +8,23 @@ import toast from "react-hot-toast";
 import AssetPreview from "./preview/asset-preview";
 import CardTemplate from "../common/templates/card-template";
 import CardListTemplate from "../common/templates/card-list-template";
-import { useState } from "react";
 import { t } from "i18next";
+import { Id } from "../../data/model/common";
+import { usePageContext } from "../../data/model/project";
+import { useRefresher } from "../../data/util";
 
-export default function AssetCard({
-    asset, updateCallback
-}: {
-    asset: AssetData, updateCallback: (asset: AssetData) => void
-}) {
-    const [curAsset, setCurAsset] = useState(asset);
-    function updateCurAsset(asset: AssetData) {
-        setCurAsset(asset);
-        updateCallback(asset);
-    }
+export default function AssetCard({ id }: { id: Id }) {
+    const { project } = usePageContext();
+    const asset = project.assets.get(id) as AssetData;
+    const update = useRefresher();
 
     return (
         <CardTemplate>
-            <AssetPreview asset={curAsset} />
+            <AssetPreview asset={asset} />
             <CardListTemplate>
                 <ListElement label={t("Type")}>
                     <DropdownSection
-                        defaultValue={curAsset.ty}
+                        defaultValue={asset.ty}
                         labels={[
                             AssetType[AssetType.Image],
                             AssetType[AssetType.Video],
@@ -43,34 +39,28 @@ export default function AssetCard({
                             AssetType.Text,
                             AssetType.Model,
                         ]}
-                        onChange={(ty) => updateCurAsset({
-                            ...curAsset,
-                            ty: ty,
-                        })}
+                        onChange={ty => {
+                            asset.ty = ty;
+                            update();
+                        }}
                     />
                 </ListElement>
                 <ListElement label={t("Id")}>
-                    <Input value={curAsset.id.toString()} onChange={(ev) => {
-                        updateCurAsset({
-                            ...curAsset,
-                            id: ev.target.value ?? "",
-                        });
+                    <Input value={asset.id.toString()} onChange={ev => {
+                        asset.id = ev.target.value;
+                        update();
                     }} readOnly />
                 </ListElement>
                 <ListElement label={t("Name")}>
-                    <Input value={curAsset.name} onChange={(ev) => {
-                        updateCurAsset({
-                            ...curAsset,
-                            name: ev.currentTarget.value ?? "",
-                        });
+                    <Input value={asset.name} onChange={ev => {
+                        asset.name = ev.target.value;
+                        update();
                     }} />
                 </ListElement>
                 <ListElement label={t("Path")}>
-                    <Input value={curAsset.path} onChange={(ev) => {
-                        updateCurAsset({
-                            ...curAsset,
-                            path: ev.currentTarget.value ?? "",
-                        });
+                    <Input value={asset.path} onChange={(ev) => {
+                        asset.path = ev.target.value;
+                        update();
                     }} readOnly />
                     <Button
                         className="h-full px-3 ml-2"
@@ -78,19 +68,15 @@ export default function AssetCard({
                             const file = await open({ title: "Select asset" });
                             if (file != null) {
                                 const ty = identifyAssetType(file);
+                                asset.path = file;
+
                                 if (ty == undefined) {
                                     toast.error(t("UnrecognizedFileType"));
-                                    updateCurAsset({
-                                        ...curAsset,
-                                        path: file,
-                                    });
                                 } else {
-                                    updateCurAsset({
-                                        ...curAsset,
-                                        path: file,
-                                        ty: ty,
-                                    });
+                                    asset.ty = ty;
                                 }
+
+                                update();
                             }
                         }}
                     >

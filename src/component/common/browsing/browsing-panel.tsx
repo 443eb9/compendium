@@ -5,10 +5,10 @@ import { Input } from "../input";
 import { useState } from "react";
 
 export function BrowsingPanel({
-    options, opened, setter, close
+    title, options, setter, close
 }: {
-    options: Map<Id, Referenceable>,
-    opened: boolean,
+    title: string,
+    options: Map<Id, Referenceable> | null,
     setter: (op: Id) => void,
     close: () => void
 }) {
@@ -17,18 +17,19 @@ export function BrowsingPanel({
     return (
         <div
             className={`absolute flex flex-col gap-2 max-w-96 max-h-48 overflow-x-auto p-1
-                bg-darker border-2 border-outline rounded-md transition-transform 
-                ${opened ? "scale-y-100" : "scale-y-0"}`}
+                bg-darker border-2 border-outline rounded-md transition-transform
+                ${options ? "scale-y-100" : "scale-y-0"}`}
             style={{
                 transformOrigin: "top",
             }}
         >
-            <div className="">{t("SelectAsset")}</div>
+            <div className="">{t(title)}</div>
             <div className="flex gap-2 items-center">
                 <Input onChange={(ev) => setSearch(ev.target.value ?? "")} />
             </div>
             <div className="flex flex-wrap gap-2">
                 {
+                    options &&
                     [...options.entries()]
                         .filter(([_, val]) => val.name.search(search) != -1)
                         .map(([key, val], i) =>

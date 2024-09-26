@@ -33,6 +33,8 @@ i18n.use(initReactI18next).init({
                 "Unnamed": "Unnamed",
                 "Search": "Search",
                 "Close": "Close",
+                "Title": "Title",
+                "Body": "Body",
 
                 "ProjectWritingError": "Project writing failed",
 
@@ -46,10 +48,18 @@ i18n.use(initReactI18next).init({
                 "Text": "Text",
                 "Model": "Model",
 
+                "Asset": "Asset",
+                "Item": "Item",
+                "Structure": "Structure",
+
+                "SelectAsset": "Select Asset",
+                "SelectItem": "Select Item",
+                "SelectStructure": "Select Structure",
+
                 // Root
                 "HomeButton": "Home",
                 "ItemsButton": "Items",
-                "StoryButton": "Story",
+                "StoriesButton": "Stories",
                 "CharactersButton": "Characters",
                 "StructuresButton": "Structures",
                 "TerrainButton": "Terrain",
@@ -86,11 +96,14 @@ i18n.use(initReactI18next).init({
                 "UnrecognizedFileType": "Failed to recognize type of this file. Are you sure this is a valid asset?",
 
                 // Items
-                "SelectAsset": "Select Asset",
                 "CreateItem": "Create Item",
 
                 // Tags
                 "CreateTag": "Create Tag",
+
+                // Stories
+                "CreateStory": "Create Story",
+                "RefType": "Ref Type",
             },
         },
     },

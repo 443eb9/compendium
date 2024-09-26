@@ -25,6 +25,8 @@ pub struct Project {
     pub assets_settings: AssetSettings,
     pub items: HashMap<Id, Item>,
     pub items_settings: ItemsSettings,
+    pub stories: HashMap<Id, Story>,
+    pub story_settings: StorySettings,
 }
 
 impl Project {
@@ -52,6 +54,15 @@ pub enum IdType {
     Uuid,
     #[default]
     IncreasingSequence,
+}
+
+#[derive(Default, Serialize_repr, Deserialize_repr)]
+#[repr(u8)]
+pub enum ReferenceType {
+    #[default]
+    Asset,
+    Item,
+    Structure,
 }
 
 #[derive(PartialEq, Eq, Hash)]
@@ -124,15 +135,24 @@ pub struct Tag {
 }
 
 impl PartialEq for Tag {
+    #[inline]
     fn eq(&self, other: &Self) -> bool {
         self.id == other.id
     }
 }
 
 impl Hash for Tag {
+    #[inline]
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.id.hash(state);
     }
+}
+
+#[derive(Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TagsSettings {
+    pub id_type: IdType,
+    pub next_id: u32,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -179,7 +199,17 @@ pub struct ItemsSettings {
 
 #[derive(Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct TagsSettings {
+pub struct Story {
+    pub id: Id,
+    pub reference: String,
+    pub ref_type: ReferenceType,
+    pub title: String,
+    pub body: String,
+}
+
+#[derive(Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StorySettings {
     pub id_type: IdType,
     pub next_id: u32,
 }

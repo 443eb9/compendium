@@ -3,7 +3,7 @@ import Root from "./page/root";
 import HomePage from "./page/home";
 import ItemsPage from "./page/items";
 import CharacterPage from "./page/character";
-import StoryPage from "./page/story";
+import StoriesPage from "./page/stories";
 import StructurePage from "./page/structure";
 import TerrainPage from "./page/terrain";
 import AssetsPage from "./page/assets";
@@ -15,6 +15,8 @@ import ItemSettings from "./component/items/items-settings";
 import TagsContainer from "./component/tags/tags-container";
 import TagsSettings from "./component/tags/tags-settings";
 import TreePage from "./page/tree";
+import StoryCardsContainer from "./component/story/story-cards-container";
+import StorySettings from "./component/story/story-settings";
 
 export const router = createBrowserRouter([
     {
@@ -45,8 +47,18 @@ export const router = createBrowserRouter([
                 element: <CharacterPage />,
             },
             {
-                path: "/story",
-                element: <StoryPage />,
+                path: "/stories",
+                element: <StoriesPage />,
+                children: [
+                    {
+                        path: "",
+                        element: <StoryCardsContainer />,
+                    },
+                    {
+                        path: "settings",
+                        element: <StorySettings />
+                    }
+                ],
             },
             {
                 path: "/structure",
@@ -87,7 +99,7 @@ export const router = createBrowserRouter([
             {
                 path: "/tree",
                 element: <TreePage />,
-            }
+            },
         ],
     },
 ]);

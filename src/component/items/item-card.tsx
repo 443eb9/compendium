@@ -7,41 +7,32 @@ import CardTemplate from "../common/templates/card-template";
 import { Input } from "../common/input";
 import Button from "../common/button";
 import TagsDisplay from "../common/tagging/tags-display";
-import { useState } from "react";
 import { t } from "i18next";
 import { Id } from "../../data/model/common";
+import { useRefresher } from "../../data/util";
 
 export default function ItemCard({
-    item, browsing, setBrowsing
+    id, browsing, setBrowsing
 }: {
-    item: ItemData,
+    id: Id,
     browsing: Id | null,
     setBrowsing: (id: Id | null) => void
 }) {
-    const { project, setProject } = usePageContext();
-    const curItem = project.items.get(item.id);
-    if (!curItem) return "";
-
-    const [_, setRefresh] = useState(0);
-    function updateCurItem(item: ItemData) {
-        project.items.set(item.id, item);
-        setProject(project);
-        setRefresh(r => r++);
-    }
+    const { project } = usePageContext();
+    const item = project.items.get(id) as ItemData;
+    const update = useRefresher();
 
     return (
         <CardTemplate>
-            <AssetPreview asset={project.assets.get(curItem.reference)} />
+            <AssetPreview asset={project.assets.get(item.reference)} />
             <CardListTemplate>
                 <ListElement label={t("Id")}>
-                    <Input value={curItem.id.toString()} readOnly />
+                    <Input value={item.id.toString()} readOnly />
                 </ListElement>
                 <ListElement label={t("Reference")}>
-                    <Input value={curItem.reference.toString()} onChange={(ev) => {
-                        updateCurItem({
-                            ...curItem,
-                            reference: ev.target.value,
-                        });
+                    <Input value={item.reference.toString()} onChange={(ev) => {
+                        item.reference = ev.target.value;
+                        update();
                     }} />
                     <Button className="h-full w-24 ml-2" onClick={() => {
                         setBrowsing(browsing != null && browsing == item.id ? null : item.id);
@@ -50,24 +41,20 @@ export default function ItemCard({
                     </Button>
                 </ListElement>
                 <ListElement label={t("Name")}>
-                    <Input value={curItem.name} onChange={(ev) => {
-                        updateCurItem({
-                            ...curItem,
-                            name: ev.target.value,
-                        });
+                    <Input value={item.name} onChange={(ev) => {
+                        item.name = ev.target.value;
+                        update();
                     }} />
                 </ListElement>
                 <ListElement label={t("Desc")}>
-                    <Input value={curItem.desc} onChange={(ev) => {
-                        updateCurItem({
-                            ...curItem,
-                            desc: ev.target.value,
-                        });
+                    <Input value={item.desc} onChange={(ev) => {
+                        item.desc = ev.target.value;
+                        update();
                     }} />
                 </ListElement>
                 <ListElement className="h-auto" label={t("Tags")}>
-                    <TagsDisplay tags={curItem.tags} setTags={(newTags) => {
-                        const target = project.items.get(curItem.id);
+                    <TagsDisplay tags={item.tags} setTags={(newTags) => {
+                        const target = project.items.get(item.id);
                         if (target) {
                             target.tags = newTags;
                         }
