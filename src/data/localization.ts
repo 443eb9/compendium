@@ -14,6 +14,7 @@ i18n.use(initReactI18next).init({
         "en-US": {
             translation: {
                 // Common
+                "": "",
                 "Browse": "Browse",
                 "Settings": "Settings",
                 "CloseSettings": "Close Settings",

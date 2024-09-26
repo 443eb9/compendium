@@ -48,6 +48,11 @@ export function serProject(project: Project) {
     p.tags = Object.fromEntries(p.tags);
     // @ts-ignore
     p.stories = Object.fromEntries(p.stories);
+    // @ts-ignore
+    Object.entries(p.items).forEach((item) => {
+        // @ts-ignore
+        item.tags = new Map(item.tags);
+    });
     return JSON.stringify(p);
 }
 
@@ -57,7 +62,7 @@ export function deserProject(project: string) {
     p.assets = new Map(Object.entries(p.assets));
     p.items = new Map(Object.entries(p.items));
     p.tags = new Map(Object.entries(p.tags));
-    p.items.forEach((i) => {
+    p.items.forEach(i => {
         i.tags = new Set([...i.tags.values()]);
     });
     p.stories = new Map(Object.entries(p.stories));

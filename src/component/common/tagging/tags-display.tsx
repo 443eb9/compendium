@@ -4,19 +4,26 @@ import Tag from "./tag";
 import { t } from "i18next";
 import TagsDropdownSection from "./tags-dropdown-section";
 import clsx from "clsx";
+import { useRefresher } from "../../../data/util";
 
 export default function TagsDisplay({
-    tags, setTags, readonly
+    tags, readonly
 }: {
-    tags: Set<string>, setTags: (tags: Set<string>) => void, readonly?: boolean
+    tags: Set<string>, readonly?: boolean
 }) {
     const [isExpanded, setExpanded] = useState(false);
+    const update = useRefresher();
 
     return (
         <div className="flex flex-grow gap-2 flex-wrap w-24">
             {
                 [...tags.values()].map((tag, i) =>
-                    <Tag key={i} tag={tag} />
+                    <button key={i} onClick={() => {
+                        tags.delete(tag);
+                        update();
+                    }}>
+                        <Tag tag={tag} />
+                    </button>
                 )
             }
             {
@@ -33,14 +40,13 @@ export default function TagsDisplay({
                             borderBottomLeftRadius: isExpanded ? "0" : "6px",
                             borderBottomRightRadius: isExpanded ? "0" : "6px",
                         }}
-                    >{t("Add")}</Button>
+                    >
+                        {t("Add")}
+                    </Button>
                     <TagsDropdownSection
                         isExpanded={isExpanded}
                         setExpanded={setExpanded}
-                        addTag={(id) => {
-                            tags.add(id);
-                            setTags(tags);
-                        }}
+                        addTag={id => tags.add(id)}
                     />
                 </div>
             }

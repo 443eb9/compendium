@@ -1,4 +1,3 @@
-import { HexColorPicker } from "react-colorful";
 import { usePageContext } from "../../data/model/project";
 import ContainerTemplate from "../common/templates/container-template";
 import TagCard from "./tag-card";

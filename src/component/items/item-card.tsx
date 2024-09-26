@@ -53,12 +53,7 @@ export default function ItemCard({
                     }} />
                 </ListElement>
                 <ListElement className="h-auto" label={t("Tags")}>
-                    <TagsDisplay tags={item.tags} setTags={(newTags) => {
-                        const target = project.items.get(item.id);
-                        if (target) {
-                            target.tags = newTags;
-                        }
-                    }} />
+                    <TagsDisplay tags={item.tags} />
                 </ListElement>
             </CardListTemplate>
         </CardTemplate>
