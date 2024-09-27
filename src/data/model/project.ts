@@ -19,6 +19,19 @@ export type Project = {
     storySettings: StorySettingsData,
 }
 
+export type SerializableProject = {
+    path: string,
+    name: string,
+    tags: Object,
+    tagsSettings: TagsSettingsData,
+    assets: Object,
+    assetsSettings: AssetSettingsData,
+    items: Object,
+    itemsSettings: ItemsSettingsData,
+    stories: Object,
+    storySettings: StorySettingsData,
+}
+
 export type PageContext = {
     project: Project,
     setProject: Dispatch<SetStateAction<Project | null>>,
@@ -34,37 +47,40 @@ export function usePageContext() {
 
 export function serProject(project: Project) {
     console.log(project);
-    let p = Object.fromEntries(Object.entries(project));
-    // @ts-ignore
-    p.items.forEach((item) => {
-        // @ts-ignore
-        item.tags = [...item.tags.values()];
+    const p = {} as Project;
+    Object.assign(p, project);
+    let serp = p as SerializableProject;
+    serp.path = p.path;
+    serp.name = p.name;
+    serp.assets = Object.fromEntries(p.assets.entries());
+    serp.tags = Object.fromEntries(p.tags.entries());
+
+    const items = [...p.items.entries()].map(val => {
+        return [
+            val[0],
+            {
+                ...val[1],
+                tags: [...val[1].tags.values()],
+            }
+        ];
     });
-    // @ts-ignore
-    p.assets = Object.fromEntries(p.assets);
-    // @ts-ignore
-    p.items = Object.fromEntries(p.items);
-    // @ts-ignore
-    p.tags = Object.fromEntries(p.tags);
-    // @ts-ignore
-    p.stories = Object.fromEntries(p.stories);
-    // @ts-ignore
-    Object.entries(p.items).forEach((item) => {
-        // @ts-ignore
-        item.tags = new Map(item.tags);
-    });
-    return JSON.stringify(p);
+    serp.items = Object.fromEntries(items);
+
+    return JSON.stringify(serp);
 }
 
 export function deserProject(project: string) {
     console.log(project);
-    let p = JSON.parse(project) as Project;
-    p.assets = new Map(Object.entries(p.assets));
-    p.items = new Map(Object.entries(p.items));
-    p.tags = new Map(Object.entries(p.tags));
-    p.items.forEach(i => {
-        i.tags = new Set([...i.tags.values()]);
-    });
-    p.stories = new Map(Object.entries(p.stories));
+    let serp = JSON.parse(project) as SerializableProject;
+    let p = serp as Project;
+    p.assets = new Map(Object.entries(serp.assets));
+    p.items = new Map(Object.entries(serp.items).map(obj =>
+        [obj[0], {
+            ...obj[1],
+            tags: new Set(obj[1].tags),
+        } as ItemData]
+    ));
+    p.tags = new Map(Object.entries(serp.tags));
+    p.stories = new Map(Object.entries(serp.stories));
     return p;
 }
