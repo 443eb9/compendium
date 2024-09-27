@@ -54,6 +54,7 @@ export function serProject(project: Project) {
     serp.name = p.name;
     serp.assets = Object.fromEntries(p.assets.entries());
     serp.tags = Object.fromEntries(p.tags.entries());
+    serp.stories = Object.fromEntries(p.stories.entries());
 
     const items = [...p.items.entries()].map(val => {
         return [

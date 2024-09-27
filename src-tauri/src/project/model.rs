@@ -169,6 +169,7 @@ pub struct Asset {
 pub enum AssetType {
     Image,
     Video,
+    Audio,
     Text,
     Model,
 }

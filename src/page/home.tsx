@@ -25,7 +25,7 @@ export default function HomePage() {
             .then(() => {
                 toast.success(t("ProjectCreateSuccess"));
                 invoke("fetch_project")
-                    .then((proj) => setProject(deserProject(proj as string)))
+                    .then((proj) => setProject(deserProject(JSON.stringify(proj))))
                     .catch((err) => toast.error(t(err)));
             })
             .catch((err) => toast.error(localizeError(err, t)));
