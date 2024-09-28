@@ -25,3 +25,4 @@ thiserror = "1.0"
 tauri-plugin-fs = "2.0.0-rc"
 serde_repr = "0.1"
 uuid = { version = "1.10", features = ["serde"] }
+pathdiff = "0.2.1"

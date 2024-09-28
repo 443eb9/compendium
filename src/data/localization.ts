@@ -3,7 +3,6 @@ import { initReactI18next } from "react-i18next";
 import { Error } from "../data/model/common";
 
 export function localizeError(err: Error, t: TFunction<"translation", undefined>) {
-    console.log(err)
     return t(err.ty) + " " + err.content
 }
 
@@ -36,6 +35,9 @@ i18n.use(initReactI18next).init({
                 "Close": "Close",
                 "Title": "Title",
                 "Body": "Body",
+
+                "IdTypeSection": "ID Type",
+                "NextId": "Next ID",
 
                 "ProjectWritingError": "Project writing failed",
 
@@ -92,9 +94,10 @@ i18n.use(initReactI18next).init({
                 "CreateAsset": "Create Asset",
                 "PreviewNotSupport": "Currently, preview only supports for image assets.",
                 "PreviewNotAvailable": "No asset is chosen. Preview is not available.",
-                "IdTypeSection": "ID Type",
-                "NextId": "Next ID",
                 "UnrecognizedFileType": "Failed to recognize type of this file. Are you sure this is a valid asset?",
+                "PathType": "Path Type",
+                "Absolute": "Absolute",
+                "Relative": "Relative",
 
                 // Items
                 "CreateItem": "Create Item",

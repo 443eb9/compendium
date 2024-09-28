@@ -19,8 +19,7 @@ export default function RadioButtonGroup({
                         label={labels[i]}
                         callback={callback}
                         isEnabled={enabled == option}
-                    >
-                    </RadioButton>
+                    />
                 )
             }
         </div>

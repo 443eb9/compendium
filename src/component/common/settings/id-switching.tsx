@@ -1,7 +1,5 @@
-import { t } from "i18next";
 import { IdType } from "../../../data/model/common";
-import ListSectionTitle from "../list-section-title";
-import RadioButtonGroup from "../radio-button-group";
+import RadioButtonSection from "../radio-button-section";
 
 export default function IdSwitching({
     ty, setIdType
@@ -9,16 +7,12 @@ export default function IdSwitching({
     ty: IdType, setIdType: (newTy: IdType) => void
 }) {
     return (
-        <div>
-            <ListSectionTitle title={t("IdTypeSection")} />
-            <div className="flex">
-                <RadioButtonGroup
-                    labels={[IdType[IdType.Uuid], IdType[IdType.IncreasingSequence]]}
-                    options={[IdType.Uuid, IdType.IncreasingSequence]}
-                    callback={(op) => setIdType(op)}
-                    enabled={ty}
-                ></RadioButtonGroup>
-            </div>
-        </div>
+        <RadioButtonSection
+            title="IdTypeSection"
+            labels={[IdType[IdType.Uuid], IdType[IdType.IncreasingSequence]]}
+            options={[IdType.Uuid, IdType.IncreasingSequence]}
+            callback={(op) => setIdType(op)}
+            enabled={ty}
+        />
     );
 }

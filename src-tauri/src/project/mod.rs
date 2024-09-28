@@ -7,7 +7,7 @@ use tauri::{
 
 use crate::{
     err::{
-        Error, ProjectCloseError, ProjectCreationError, ProjectFetchError, ProjectReadError,
+        ProjectCloseError, ProjectCreationError, ProjectFetchError, ProjectReadError,
         ProjectUpdateError,
     },
     project::{io::PROJECT, model::Project},
@@ -20,14 +20,13 @@ pub mod model;
 pub fn create_project(
     path: String,
     project: State<Mutex<Option<Project>>>,
-) -> Result<(), Error<ProjectCreationError>> {
+) -> Result<(), ProjectCreationError> {
     if Path::new(&path).join(PROJECT).exists() {
-        return Err(Error::no_content(ProjectCreationError::AlreadyExists));
+        return Err(ProjectCreationError::AlreadyExists);
     }
 
     let proj = Project::new(path)?;
-    io::write_project(&proj)
-        .map_err(|err| Error::new(ProjectCreationError::WritingError, err.to_string()))?;
+    io::write_project(&proj)?;
     project.lock().unwrap().replace(proj);
     Ok(())
 }
@@ -36,21 +35,20 @@ pub fn create_project(
 pub fn open_project(
     path: String,
     project: State<Mutex<Option<Project>>>,
-) -> Result<(), Error<ProjectReadError>> {
-    *project.lock().unwrap() = Some(io::read_project(path)?);
+) -> Result<(), ProjectReadError> {
+    let mut proj = io::read_project(path.as_str())?;
+    proj.path = path;
+    *project.lock().unwrap() = Some(proj);
     Ok(())
 }
 
 #[tauri::command]
-pub fn close_project(
-    project: State<Mutex<Option<Project>>>,
-) -> Result<(), Error<ProjectCloseError>> {
+pub fn close_project(project: State<Mutex<Option<Project>>>) -> Result<(), ProjectCloseError> {
     let mut guard = project.lock().unwrap();
     let project = guard
         .as_ref()
         .ok_or_else(|| ProjectCloseError::ProjectUninitialized)?;
-    io::write_project(&project)
-        .map_err(|err| Error::new(ProjectCloseError::WritingError, err.to_string()))?;
+    io::write_project(&project)?;
     *guard = None;
     Ok(())
 }
@@ -58,12 +56,12 @@ pub fn close_project(
 #[tauri::command]
 pub fn fetch_project(
     project: State<Mutex<Option<Project>>>,
-) -> Result<Response, Error<ProjectFetchError>> {
+) -> Result<Response, ProjectFetchError> {
     match &*project.lock().unwrap() {
         Some(project) => Ok(Response::new(InvokeResponseBody::Json(
             serde_json::to_string(project).unwrap(),
         ))),
-        None => Err(Error::no_content(ProjectFetchError::ProjectUninitialized)),
+        None => Err(ProjectFetchError::ProjectUninitialized),
     }
 }
 
@@ -71,13 +69,11 @@ pub fn fetch_project(
 pub fn update_project(
     new_project: String,
     project: State<Mutex<Option<Project>>>,
-) -> Result<(), Error<ProjectUpdateError>> {
+) -> Result<(), ProjectUpdateError> {
     let mut project = project.lock().unwrap();
-    let new_project = serde_json::from_str(&new_project)
-        .map_err(|err| Error::new(ProjectUpdateError::InvalidProject, err.to_string()))?;
+    let new_project = serde_json::from_str(&new_project)?;
 
-    io::write_project(&new_project)
-        .map_err(|err| Error::new(ProjectUpdateError::WritingError, err.to_string()))?;
+    io::write_project(&new_project)?;
     *project = Some(new_project);
 
     Ok(())

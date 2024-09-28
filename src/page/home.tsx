@@ -4,7 +4,7 @@ import { open } from '@tauri-apps/plugin-dialog';
 import "../data/localization";
 import { invoke } from "@tauri-apps/api/core";
 import toast from "react-hot-toast";
-import { deserProject, usePageContext } from "../data/model/project";
+import { deserProject, serProject, usePageContext } from "../data/model/project";
 import { localizeError } from "../data/localization";
 import { t } from "i18next";
 
@@ -52,10 +52,16 @@ export default function HomePage() {
     }
 
     function closeProject() {
-        invoke("close_project")
+        invoke("update_project", { newProject: serProject(project) })
             .then(() => {
+                toast.success(t("ProjectUpdateSuccess"));
+                invoke("close_project")
+                    .then(() => {
+                        setProject(null);
+                        toast.success(t("ProjectCloseSuccess"));
+                    })
+                    .catch((err) => toast.error(localizeError(err, t)));
                 setProject(null);
-                toast.success(t("ProjectCloseSuccess"));
             })
             .catch((err) => toast.error(localizeError(err, t)));
     }
@@ -72,7 +78,6 @@ export default function HomePage() {
                 project != null
                     ? <div className="flex flex-col gap-1 text-lg font-bold">
                         <div className="italic">{project.name}</div>
-                        <div className="italic">At {project.path}</div>
                         <Button className="flex items-center gap-2 p-1 pl-2 w-48" onClick={closeProject}>
                             <AiOutlineFolderAdd />
                             <h3>{t("CloseProject")}</h3>

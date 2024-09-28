@@ -50,8 +50,6 @@ export function serProject(project: Project) {
     const p = {} as Project;
     Object.assign(p, project);
     let serp = p as SerializableProject;
-    serp.path = p.path;
-    serp.name = p.name;
     serp.assets = Object.fromEntries(p.assets.entries());
     serp.tags = Object.fromEntries(p.tags.entries());
     serp.stories = Object.fromEntries(p.stories.entries());

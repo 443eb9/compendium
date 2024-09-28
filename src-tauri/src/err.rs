@@ -1,34 +1,5 @@
 use compendium_macros::SerializableError;
-use serde::Serialize;
 use thiserror::Error;
-
-#[derive(Serialize)]
-pub struct Error<E: std::error::Error> {
-    pub ty: E,
-    pub content: String,
-}
-
-impl<E: std::error::Error> From<E> for Error<E> {
-    fn from(value: E) -> Self {
-        Self {
-            ty: value,
-            content: String::default(),
-        }
-    }
-}
-
-impl<E: std::error::Error> Error<E> {
-    pub fn new(ty: E, content: String) -> Self {
-        Self { ty, content }
-    }
-
-    pub fn no_content(ty: E) -> Self {
-        Self {
-            ty,
-            content: String::default(),
-        }
-    }
-}
 
 #[derive(Debug, Error, SerializableError)]
 pub enum ProjectCreationError {
@@ -37,7 +8,7 @@ pub enum ProjectCreationError {
     #[error("ProjectCreateFailAlreadyExists")]
     AlreadyExists,
     #[error("ProjectWritingError")]
-    WritingError,
+    WritingError(#[from] ProjectWritingError),
 }
 
 #[derive(Debug, Error, SerializableError)]
@@ -45,7 +16,7 @@ pub enum ProjectCloseError {
     #[error("ProjectCloseErrorProjectUninitialized")]
     ProjectUninitialized,
     #[error("ProjectWritingError")]
-    WritingError,
+    WritingError(#[from] ProjectWritingError),
 }
 
 #[derive(Debug, Error, SerializableError)]
@@ -57,23 +28,21 @@ pub enum ProjectFetchError {
 #[derive(Debug, Error, SerializableError)]
 pub enum ProjectUpdateError {
     #[error("ProjectUpdateErrorInvalidProject")]
-    InvalidProject,
+    InvalidProject(#[from] serde_json::Error),
     #[error("ProjectWritingError")]
-    WritingError,
+    WritingError(#[from] ProjectWritingError),
 }
 
 #[derive(Debug, Error, SerializableError)]
 pub enum ProjectWritingError {
-    #[error("ProjectWritingErrorIoError")]
+    #[error("{0}")]
     IoError(#[from] std::io::Error),
-    #[error("ProjectWritingErrorInterrupted")]
-    Interrupted,
 }
 
 #[derive(Debug, Error, SerializableError)]
 pub enum ProjectReadError {
-    #[error("ProjectOpenErrorIoError")]
+    #[error("{0}")]
     IoError(#[from] std::io::Error),
-    #[error("ProjectOpenErrorDeserializingError")]
+    #[error("{0}")]
     DeserializingError(#[from] serde_json::Error),
 }

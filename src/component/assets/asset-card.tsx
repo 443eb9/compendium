@@ -1,4 +1,4 @@
-import { AssetData, AssetType, identifyAssetType } from "../../data/model/assets";
+import { AssetData, AssetType, identifyAssetType, PathType } from "../../data/model/assets";
 import ListElement from "../common/list-element";
 import { Input } from "../common/input";
 import Button from "../common/button";
@@ -12,6 +12,7 @@ import { t } from "i18next";
 import { Id } from "../../data/model/common";
 import { usePageContext } from "../../data/model/project";
 import { useRefresher } from "../../data/util";
+import { invoke } from "@tauri-apps/api/core";
 
 export default function AssetCard({ id }: { id: Id }) {
     const { project } = usePageContext();
@@ -66,14 +67,24 @@ export default function AssetCard({ id }: { id: Id }) {
                         className="h-full px-3 ml-2"
                         onClick={async () => {
                             const file = await open({ title: "Select asset" });
-                            if (file != null) {
+                            if (file) {
                                 const ty = identifyAssetType(file);
-                                asset.path = file;
 
                                 if (ty == undefined) {
                                     toast.error(t("UnrecognizedFileType"));
                                 } else {
                                     asset.ty = ty;
+                                }
+
+                                switch (project.assetsSettings.pathType) {
+                                    case PathType.Absolute:
+                                        asset.path = file;
+                                        break;
+                                    case PathType.Relative:
+                                        invoke("relativize_path", { path: file, base: project.path })
+                                            .then(path => asset.path = path as string)
+                                            .catch(err => toast.error(err));
+                                        break;
                                 }
 
                                 update();

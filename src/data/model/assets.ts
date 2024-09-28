@@ -15,9 +15,15 @@ export enum AssetType {
     Model,
 }
 
+export enum PathType {
+    Absolute,
+    Relative,
+}
+
 export type AssetSettingsData = {
     idType: IdType,
     nextId: number,
+    pathType: PathType,
 }
 
 const imageExts = new Set(["jpg", "png", "bmp", "webp", "svg", "ase", "psd", "kra"]);

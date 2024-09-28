@@ -6,6 +6,7 @@ use crate::project::model::Project;
 
 mod err;
 mod project;
+mod util;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -18,7 +19,9 @@ pub fn run() {
             project::open_project,
             project::close_project,
             project::fetch_project,
-            project::update_project
+            project::update_project,
+            util::relativize_path,
+            util::absolutize_path,
         ])
         .setup(|app| {
             app.manage(Mutex::<Option<Project>>::new(None));

@@ -9,10 +9,7 @@ use serde::{de::Visitor, Deserialize, Serialize};
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use uuid::Uuid;
 
-use crate::{
-    err::{Error, ProjectCreationError},
-    project::io::PROJECT,
-};
+use crate::{err::ProjectCreationError, project::io::PROJECT};
 
 #[derive(Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -31,7 +28,7 @@ pub struct Project {
 
 impl Project {
     #[inline]
-    pub fn new(path: String) -> Result<Self, Error<ProjectCreationError>> {
+    pub fn new(path: String) -> Result<Self, ProjectCreationError> {
         let name = Path::new(&path)
             .file_name()
             .ok_or_else(|| ProjectCreationError::RootFolder)?;
@@ -43,7 +40,7 @@ impl Project {
     }
 
     #[inline]
-    pub fn meta_path(&self) -> PathBuf {
+    pub fn path(&self) -> PathBuf {
         Path::new(&self.path).join(PROJECT)
     }
 }
@@ -174,11 +171,20 @@ pub enum AssetType {
     Model,
 }
 
+#[derive(Default, Serialize_repr, Deserialize_repr)]
+#[repr(u8)]
+pub enum PathType {
+    Absolute,
+    #[default]
+    Relative,
+}
+
 #[derive(Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AssetSettings {
     pub id_type: IdType,
     pub next_id: u32,
+    pub path_type: PathType,
 }
 
 #[derive(Serialize, Deserialize)]
