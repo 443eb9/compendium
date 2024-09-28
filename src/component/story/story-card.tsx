@@ -89,11 +89,14 @@ export default function StoryCard({
                 </ListElement>
                 <ListElement className="h-auto" label={t("Body")}>
                     <TextArea
-                        className="h-24 resize-none"
+                        className="resize-none"
                         value={story.body}
                         onChange={ev => {
                             story.body = ev.target.value;
                             update();
+                        }}
+                        style={{
+                            height: "144px",
                         }}
                     ></TextArea>
                 </ListElement>

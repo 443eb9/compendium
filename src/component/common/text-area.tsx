@@ -1,13 +1,14 @@
-import { ChangeEventHandler, ReactNode } from "react";
+import { ChangeEventHandler, CSSProperties, ReactNode } from "react";
 
 export default function TextArea({
-    className, onChange, readOnly, value, children
+    className, onChange, readOnly, value, children, style
 }: {
     className?: string
     onChange?: ChangeEventHandler<HTMLTextAreaElement>,
     readOnly?: boolean,
     value?: string,
-    children?: ReactNode
+    children?: ReactNode,
+    style: CSSProperties
 }) {
     return (
         <textarea
@@ -16,6 +17,7 @@ export default function TextArea({
             ${className}`}
             onChange={onChange}
             value={value}
+            style={style}
         >
             {children}
         </textarea>
