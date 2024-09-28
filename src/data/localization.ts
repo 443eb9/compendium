@@ -35,9 +35,14 @@ i18n.use(initReactI18next).init({
                 "Close": "Close",
                 "Title": "Title",
                 "Body": "Body",
+                "Regenerate": "Regenerate",
+                "Cancel": "Cancel",
+                "Continue": "Continue",
 
                 "IdTypeSection": "ID Type",
                 "NextId": "Next ID",
+                "IdRegenerationWarn": "References might get corrupted after the regeneration. Do you REALLY want to continue?",
+                "IdRegenerationSuccess": "Successfully regenerated IDs. Happy refactoring :p",
 
                 "ProjectWritingError": "Project writing failed",
 

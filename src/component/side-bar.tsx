@@ -1,7 +1,7 @@
 import { GrBook, GrCubes, GrHome } from "react-icons/gr";
 import SideBarButton from "./side-bar-button";
 import { RiRobot2Line } from "react-icons/ri";
-import { IoCubeOutline, IoEarthOutline, IoPricetag } from "react-icons/io5";
+import { IoCubeOutline, IoEarthOutline, IoPricetagOutline } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { MdWallpaper } from "react-icons/md";
 import { PiTreeStructure } from "react-icons/pi";
@@ -20,7 +20,7 @@ export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
         },
         {
             to: "/tags",
-            icon: <IoPricetag />,
+            icon: <IoPricetagOutline />,
             name: "Tags",
         },
         {

@@ -1,5 +1,6 @@
 import { MouseEventHandler, ReactNode } from "react";
 import Button from "./button";
+import { t } from "i18next";
 
 export default function LabelledButton({
     label, children, className, onClick
@@ -12,7 +13,7 @@ export default function LabelledButton({
             onClick={onClick}
         >
             {children}
-            {label}
+            {t(label)}
         </Button>
     );
 }

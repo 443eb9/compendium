@@ -11,7 +11,8 @@ export default {
         "darker": "#262626",
         "semidarker": "#303030",
         "outline": "#404040",
-        "accent": "#8b5cf6"
+        "accent": "#8b5cf6",
+        "warn": "#dc2626",
       }
     },
   },

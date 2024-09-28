@@ -1,6 +1,5 @@
 import { MouseEventHandler, ReactNode } from "react";
 import LabelledButton from "./labelled-button";
-import { t } from "i18next";
 
 export type Operation = {
     label: string,
@@ -16,7 +15,7 @@ export default function OperationBar({ operations }: { operations: Operation[] }
                 operations.map((op, i) =>
                     <LabelledButton
                         key={i}
-                        label={t(op.label)}
+                        label={op.label}
                         className={op.className}
                         onClick={op.onClick}
                     >

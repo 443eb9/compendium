@@ -1,14 +1,15 @@
 import { t } from "i18next";
 import ListSectionTitle from "./list-section-title";
 import RadioButtonGroup from "./radio-button-group";
+import { ReactNode } from "react";
 
 export default function RadioButtonSection({
-    title, labels, options, callback, enabled
+    title, labels, options, callback, enabled, children
 }: {
-    title: string, labels: any[], options: any[], callback: (option: any) => void, enabled: any
+    title: string, labels: any[], options: any[], callback: (option: any) => void, enabled: any, children?: ReactNode
 }) {
     return (
-        <div>
+        <div className="flex flex-col gap-2">
             <ListSectionTitle title={t(title)} />
             <div className="flex">
                 <RadioButtonGroup
@@ -18,6 +19,7 @@ export default function RadioButtonSection({
                     enabled={enabled}
                 />
             </div>
+            {children}
         </div>
     );
 }
