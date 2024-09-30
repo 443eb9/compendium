@@ -49,7 +49,7 @@ export default function SideBar({ projectLoaded }: { projectLoaded: boolean }) {
             name: "TerrainButton"
         },
         {
-            to: "/tree",
+            to: "/trees",
             icon: <PiTreeStructure />,
             name: "TreeButton",
         },

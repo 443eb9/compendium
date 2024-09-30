@@ -3,8 +3,10 @@ import { AssetData, AssetSettingsData } from "./assets";
 import { Dispatch, SetStateAction } from "react";
 import { ItemData, ItemsSettingsData } from "./items";
 import { TagData, TagsSettingsData } from "./tags";
-import { Id } from "./common";
+import { Id, IdType } from "./common";
 import { StoryData, StorySettingsData } from "./story";
+import { TreeData, TreeSettingsData } from "./trees";
+import { OperationOverride } from "../../component/common/templates/page-template";
 
 export type Project = {
     path: string,
@@ -16,7 +18,9 @@ export type Project = {
     items: Map<Id, ItemData>,
     itemsSettings: ItemsSettingsData,
     stories: Map<Id, StoryData>,
-    storySettings: StorySettingsData,
+    storiesSettings: StorySettingsData,
+    trees: Map<Id, TreeData>,
+    treesSettings: TreeSettingsData,
 }
 
 export type SerializableProject = {
@@ -29,13 +33,22 @@ export type SerializableProject = {
     items: Object,
     itemsSettings: ItemsSettingsData,
     stories: Object,
-    storySettings: StorySettingsData,
+    storiesSettings: StorySettingsData,
+    trees: Object,
+    treesSettings: {
+        treeIdType: IdType,
+        treeNextId: number,
+        nodeIdType: IdType,
+        nodeNextId: Object,
+    },
 }
 
 export type PageContext = {
     project: Project,
     setProject: Dispatch<SetStateAction<Project | null>>,
-    containerWidth: number,
+    containerSize: [number, number],
+    setOperationBar: Dispatch<SetStateAction<boolean>> | null,
+    setOperationOverride: Dispatch<SetStateAction<OperationOverride | null>>,
 }
 
 export function usePageContext() {
@@ -53,6 +66,7 @@ export function serProject(project: Project) {
     serp.assets = Object.fromEntries(p.assets.entries());
     serp.tags = Object.fromEntries(p.tags.entries());
     serp.stories = Object.fromEntries(p.stories.entries());
+    serp.trees = Object.fromEntries(p.trees.entries());
 
     const items = [...p.items.entries()].map(val => {
         return [
@@ -64,6 +78,10 @@ export function serProject(project: Project) {
         ];
     });
     serp.items = Object.fromEntries(items);
+    serp.treesSettings = {
+        ...p.treesSettings,
+        nodeNextId: Object.fromEntries(p.treesSettings.nodeNextId),
+    }
 
     return JSON.stringify(serp);
 }
@@ -81,5 +99,9 @@ export function deserProject(project: string) {
     ));
     p.tags = new Map(Object.entries(serp.tags));
     p.stories = new Map(Object.entries(serp.stories));
+    p.trees = new Map(Object.entries(serp.trees));
+
+    p.treesSettings.nodeNextId = new Map(Object.entries(serp.treesSettings.nodeNextId));
+
     return p;
 }

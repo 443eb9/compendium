@@ -113,6 +113,13 @@ i18n.use(initReactI18next).init({
                 // Stories
                 "CreateStory": "Create Story",
                 "RefType": "Ref Type",
+
+                // Trees
+                "CreateTree": "Create Tree",
+                "EnterTreeView": "Enter Tree View",
+                "ExitTreeView": "Exit Tree View",
+                "CreateTreeNode": "Create Tree Node",
+                "ValueInput": "Value Input",
             },
         },
     },

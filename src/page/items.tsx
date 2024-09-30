@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function ItemsPage() {
     const context = usePageContext();
-    const { project, setProject, containerWidth } = context;
+    const { project, setProject, containerSize: containerWidth } = context;
 
     if (project == null) {
         useNavigate()("/");

@@ -15,8 +15,8 @@ export default function StoriesPage() {
 
     function createStory() {
         const { id, next } = generateId(
-            project.storySettings.idType,
-            project.storySettings.nextId,
+            project.storiesSettings.idType,
+            project.storiesSettings.nextId,
         );
 
         console.log(project);
@@ -37,8 +37,8 @@ export default function StoriesPage() {
                     }
                 ]
             ]),
-            storySettings: {
-                ...project.storySettings,
+            storiesSettings: {
+                ...project.storiesSettings,
                 nextId: next,
             },
         });

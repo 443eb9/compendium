@@ -2,8 +2,8 @@ import { ReactNode } from "react";
 import { usePageContext } from "../../../data/model/project";
 
 export default function ContainerTemplate({ children }: { children?: ReactNode }) {
-    const { containerWidth } = usePageContext();
-    const cols = Math.floor(containerWidth / 500);
+    const { containerSize } = usePageContext();
+    const cols = Math.floor(containerSize[0] / 500);
 
     return (
         <div

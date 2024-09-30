@@ -1,15 +1,15 @@
 import { usePageContext } from "../../data/model/project";
 import ContainerTemplate from "../common/templates/container-template";
-import AssetCard from "./asset-card";
+import TreeCard from "./tree-card";
 
-export default function AssetCardsContainer() {
+export default function TreesContainer() {
     const { project } = usePageContext();
 
     return (
         <ContainerTemplate>
             {
-                [...project.assets.keys()].map((asset, i) =>
-                    <AssetCard key={i} id={asset} />
+                [...project.trees.keys()].map((tree, i) =>
+                    <TreeCard key={i} id={tree} />
                 )
             }
         </ContainerTemplate>

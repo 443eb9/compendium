@@ -14,9 +14,11 @@ import ItemCardsContainer from "./component/items/item-cards-container";
 import ItemSettings from "./component/items/items-settings";
 import TagsContainer from "./component/tags/tags-container";
 import TagsSettings from "./component/tags/tags-settings";
-import TreePage from "./page/tree";
+import TreesPage from "./page/trees";
 import StoryCardsContainer from "./component/story/story-cards-container";
 import StorySettings from "./component/story/story-settings";
+import TreesContainer from "./component/trees/trees-container";
+import TreeView from "./component/trees/tree-view";
 
 export const router = createBrowserRouter([
     {
@@ -97,8 +99,22 @@ export const router = createBrowserRouter([
                 ]
             },
             {
-                path: "/tree",
-                element: <TreePage />,
+                path: "/trees",
+                element: <TreesPage />,
+                children: [
+                    {
+                        path: "",
+                        element: <TreesContainer />,
+                    },
+                    {
+                        path: "settings",
+                        element: <TagsSettings />,
+                    },
+                    {
+                        path: "view/:id",
+                        element: <TreeView />
+                    },
+                ]
             },
         ],
     },

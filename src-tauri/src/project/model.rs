@@ -23,7 +23,9 @@ pub struct Project {
     pub items: HashMap<Id, Item>,
     pub items_settings: ItemsSettings,
     pub stories: HashMap<Id, Story>,
-    pub story_settings: StorySettings,
+    pub stories_settings: StorySettings,
+    pub trees: HashMap<Id, Tree>,
+    pub trees_settings: TreeSettings,
 }
 
 impl Project {
@@ -219,4 +221,41 @@ pub struct Story {
 pub struct StorySettings {
     pub id_type: IdType,
     pub next_id: u32,
+}
+
+#[derive(Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Tree {
+    pub id: Id,
+    pub name: String,
+    pub nodes: Vec<TreeNode>,
+    pub edges: Vec<NodeEdge>,
+    pub view_offset: [f32; 2],
+}
+
+#[derive(Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NodeEdge {
+    pub from: Id,
+    pub to: Id,
+    // TODO condition
+}
+
+#[derive(Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TreeNode {
+    pub id: Id,
+    pub position: [f32; 2],
+    pub size: [f32; 2],
+    pub title: String,
+    pub desc: String,
+}
+
+#[derive(Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TreeSettings {
+    pub tree_id_type: IdType,
+    pub tree_next_id: u32,
+    pub node_id_type: IdType,
+    pub node_next_id: HashMap<Id, u32>,
 }

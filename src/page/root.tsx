@@ -11,7 +11,7 @@ import { ErrorBoundary } from "react-error-boundary";
 export default function Root() {
     const [project, setProject] = useState<Project | null>(null);
     const pageContainer = useRef<HTMLDivElement | null>(null);
-    const [containerWidth, setContainerWidth] = useState(0);
+    const [containerSize, setContainerSize] = useState([0, 0]);
     const [isMounted, setMounted] = useState(false);
     const nav = useNavigate();
 
@@ -27,11 +27,12 @@ export default function Root() {
         }
 
         setMounted(true);
-        setContainerWidth(pageContainer.current?.clientWidth ?? 0);
+        // subtract operation bar height
+        setContainerSize([pageContainer.current?.clientWidth ?? 0, (pageContainer.current?.clientHeight ?? 56) - 56]);
         initKeyboardEvent();
 
         addEventListener("resize", () => {
-            setContainerWidth(pageContainer.current?.clientWidth ?? 0);
+            setContainerSize([pageContainer.current?.clientWidth ?? 0, (pageContainer.current?.clientHeight ?? 56) - 56]);
         });
         nav("/home");
     });
@@ -53,7 +54,7 @@ export default function Root() {
                         <Outlet context={{
                             project: project,
                             setProject: (proj: Project | null) => { console.log(proj); setProject(proj); },
-                            containerWidth: containerWidth,
+                            containerSize: containerSize,
                         }} />
                     </div>
                 </ErrorBoundary>

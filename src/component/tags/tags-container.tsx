@@ -12,8 +12,8 @@ export default function TagsContainer() {
     return (
         <ContainerTemplate>
             {
-                [...project.tags.values()].map((tag, i) =>
-                    <TagCard key={i} id={tag.id} picking={picking} setPicking={setPicking} />
+                [...project.tags.keys()].map((tag, i) =>
+                    <TagCard key={i} id={tag} picking={picking} setPicking={setPicking} />
                 )
             }
             {

@@ -8,9 +8,11 @@ export type Operation = {
     onClick: MouseEventHandler<HTMLButtonElement>,
 }
 
-export default function OperationBar({ operations }: { operations: Operation[] }) {
+export default function OperationBar({ operations, visible }: { operations: Operation[], visible: boolean }) {
     return (
-        <div className="sticky flex gap-2 h-12 py-1 top-0 backdrop-blur-md z-20 shadow-md">
+        <div
+            className={`sticky ${visible ? "flex" : "hidden"} gap-2 h-12 py-1 top-0 backdrop-blur-md z-20 shadow-md`}
+        >
             {
                 operations.map((op, i) =>
                     <LabelledButton

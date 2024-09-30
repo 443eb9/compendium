@@ -5,7 +5,7 @@ import { generateId } from "../../data/model/common";
 
 export default function StorySettings() {
     const { project } = usePageContext();
-    const settings = project.storySettings;
+    const settings = project.storiesSettings;
     const update = useRefresher();
 
     return (
@@ -17,10 +17,10 @@ export default function StorySettings() {
                     update();
                 }}
                 regenerate={ty => {
-                    project.storySettings.nextId = 0;
+                    project.storiesSettings.nextId = 0;
                     project.stories = new Map([...project.stories.values()].map(story => {
-                        const { id, next } = generateId(ty, project.storySettings.nextId);
-                        project.storySettings.nextId = next;
+                        const { id, next } = generateId(ty, project.storiesSettings.nextId);
+                        project.storiesSettings.nextId = next;
                         story.id = id;
                         return [id, story]
                     }));

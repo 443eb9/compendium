@@ -13,10 +13,10 @@ export default function ItemCardsContainer() {
     return (
         <ContainerTemplate>
             {
-                [...project.items.values()].map((item, i) =>
+                [...project.items.keys()].map((item, i) =>
                     <ItemCard
                         key={i}
-                        id={item.id}
+                        id={item}
                         browsing={browsing}
                         setBrowsing={setBrowsing}
                     />
