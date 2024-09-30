@@ -2,10 +2,11 @@ import { IoAdd } from "react-icons/io5";
 import PageTemplate from "../component/common/templates/page-template";
 import { usePageContext } from "../data/model/project";
 import { generateId } from "../data/model/common";
-import { randomColor } from "../data/util";
+import { randomColor, useRefresher } from "../data/util";
 
 export default function TagsPage() {
-    const { project, setProject } = usePageContext();
+    const { project } = usePageContext();
+    const update = useRefresher();
 
     function createTag() {
         const { id, next } = generateId(
@@ -13,25 +14,14 @@ export default function TagsPage() {
             project.tagsSettings.nextId,
         );
 
-        setProject({
-            ...project,
-            tags: new Map([
-                ...project.tags,
-                [
-                    id,
-                    {
-                        id: id,
-                        name: "",
-                        desc: "",
-                        color: randomColor(),
-                    }
-                ]
-            ]),
-            tagsSettings: {
-                ...project.tagsSettings,
-                nextId: next,
-            }
+        project.tags.set(id, {
+            id: id,
+            name: "",
+            desc: "",
+            color: randomColor(),
         });
+        project.tagsSettings.nextId = next;
+        update();
     };
 
     return (

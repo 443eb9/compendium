@@ -3,10 +3,12 @@ import PageTemplate from "../component/common/templates/page-template";
 import { generateId, ReferenceType } from "../data/model/common";
 import { usePageContext } from "../data/model/project";
 import { IoAdd } from "react-icons/io5";
+import { useRefresher } from "../data/util";
 
 export default function StoriesPage() {
     const context = usePageContext();
-    const { project, setProject } = context;
+    const { project } = context;
+    const update = useRefresher();
 
     if (project == null) {
         useNavigate()("/");
@@ -19,29 +21,15 @@ export default function StoriesPage() {
             project.storiesSettings.nextId,
         );
 
-        console.log(project);
-        console.log(id);
-
-        setProject({
-            ...project,
-            stories: new Map([
-                ...project.stories,
-                [
-                    id,
-                    {
-                        id: id,
-                        reference: "",
-                        refType: ReferenceType.Asset,
-                        title: "",
-                        body: "",
-                    }
-                ]
-            ]),
-            storiesSettings: {
-                ...project.storiesSettings,
-                nextId: next,
-            },
+        project.stories.set(id, {
+            id: id,
+            reference: "",
+            refType: ReferenceType.Asset,
+            title: "",
+            body: "",
         });
+        project.storiesSettings.nextId = next;
+        update();
     }
 
     return (

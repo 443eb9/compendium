@@ -4,10 +4,12 @@ import { usePageContext } from "../data/model/project";
 import { useNavigate } from "react-router-dom";
 import { generateId } from "../data/model/common";
 import PageTemplate from "../component/common/templates/page-template";
+import { useRefresher } from "../data/util";
 
 export default function AssetsPage() {
     const context = usePageContext();
-    const { project, setProject } = context;
+    const { project } = context;
+    const update = useRefresher();
 
     if (project == null) {
         useNavigate()("/");
@@ -20,25 +22,14 @@ export default function AssetsPage() {
             project.assetsSettings.nextId,
         );
 
-        setProject({
-            ...project,
-            assets: new Map([
-                ...project.assets,
-                [
-                    id,
-                    {
-                        id: id,
-                        ty: AssetType.Image,
-                        name: "",
-                        path: "",
-                    }
-                ]
-            ]),
-            assetsSettings: {
-                ...project.assetsSettings,
-                nextId: next,
-            }
+        project.assets.set(id, {
+            id: id,
+            ty: AssetType.Image,
+            name: "",
+            path: "",
         });
+        project.assetsSettings.nextId = next;
+        update();
     }
 
     return (

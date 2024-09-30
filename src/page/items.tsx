@@ -3,10 +3,12 @@ import { usePageContext } from "../data/model/project";
 import { IoAdd } from "react-icons/io5";
 import { generateId } from "../data/model/common";
 import { useNavigate } from "react-router-dom";
+import { useRefresher } from "../data/util";
 
 export default function ItemsPage() {
     const context = usePageContext();
-    const { project, setProject, containerSize: containerWidth } = context;
+    const { project } = context;
+    const update = useRefresher();
 
     if (project == null) {
         useNavigate()("/");
@@ -19,26 +21,15 @@ export default function ItemsPage() {
             project.itemsSettings.nextId,
         );
 
-        setProject({
-            ...project,
-            items: new Map([
-                ...project.items,
-                [
-                    id,
-                    {
-                        id: id,
-                        reference: "",
-                        name: "",
-                        desc: "",
-                        tags: new Set(),
-                    }
-                ]
-            ]),
-            itemsSettings: {
-                ...project.itemsSettings,
-                nextId: next,
-            }
+        project.items.set(id, {
+            id: id,
+            reference: "",
+            name: "",
+            desc: "",
+            tags: new Set(),
         });
+        project.itemsSettings.nextId = next;
+        update();
     }
 
     return (
